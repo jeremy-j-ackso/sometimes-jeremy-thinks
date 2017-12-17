@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sometimes Jeremy Thinks on Sometimes Jeremy Thinks</title>
+    <link>https://ackso.net/</link>
+    <description>Recent content in Sometimes Jeremy Thinks on Sometimes Jeremy Thinks</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2017 Jeremy T Jackson</copyright>
+    <lastBuildDate>Sun, 15 Oct 2017 00:00:00 -0600</lastBuildDate>
+    <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>The Wedge Pattern</title>
+      <link>https://ackso.net/post/the-wedge-pattern/</link>
+      <pubDate>Sat, 16 Dec 2017 22:30:48 -0700</pubDate>
+      
+      <guid>https://ackso.net/post/the-wedge-pattern/</guid>
+      <description>&lt;p&gt;Let&amp;rsquo;s face it: Excel doesn&amp;rsquo;t respect data.
+Unfortunately, tons of people use it and somehow successfully make very important decisions with it.
+That means that we have to live with the fallout from that if we&amp;rsquo;re trying to use that badly
+formatted data they&amp;rsquo;re producing in meaningful ways.&lt;/p&gt;
+
+&lt;p&gt;One of the worst data patterns that comes out of Excel can be called the &amp;ldquo;Wedge Pattern&amp;rdquo;.
+This happens when somebody just throws a bunch of data into a PivotTable and calls it &amp;ldquo;good enough&amp;rdquo;,
+without adhering to any sort of common data standard, like repeating values down the entire column,
+or having data (or headers) start in the first row of the first column.
+It&amp;rsquo;s a real problem, and when it&amp;rsquo;s exported to CSV it looks something like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;,,,,,,
+,&amp;quot;Last Name&amp;quot;,&amp;quot;First Name&amp;quot;,&amp;quot;Email&amp;quot;,&amp;quot;Item&amp;quot;,&amp;quot;Quantity&amp;quot;,&amp;quot;Unit Price&amp;quot;,&amp;quot;Subtotal&amp;quot;
+,&amp;quot;Smith&amp;quot;,&amp;quot;Sue&amp;quot;,&amp;quot;sue@email.org&amp;quot;,&amp;quot;Coffee&amp;quot;,1,1.00,1.00
+,,,&amp;quot;Filters&amp;quot;,5,1.00,5.00
+,,,,,&amp;quot;Subtotal&amp;quot;,6.00
+,&amp;quot;Bob&amp;quot;,,&amp;quot;Coffee&amp;quot;,2,1.00,2.00
+,,,&amp;quot;Filters&amp;quot;,10,1.00,10.00
+,,,,,&amp;quot;Subtotal&amp;quot;,12.00
+,&amp;quot;Jones&amp;quot;,&amp;quot;Tom&amp;quot;,&amp;quot;tom@email.org&amp;quot;,&amp;quot;Coffee&amp;quot;,3,1.00,3.00
+,,,,,&amp;quot;Subtotal&amp;quot;,3.00
+,,&amp;quot;Ana&amp;quot;,&amp;quot;ana@email.org&amp;quot;,&amp;quot;Coffee&amp;quot;,8,1.00.8.00
+,,,,,&amp;quot;Subtotal&amp;quot;,8.00
+,,,,,&amp;quot;Total&amp;quot;,29.00
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When it&amp;rsquo;s broken out into a table, the badness of this pattern becomes pretty clear.
+I&amp;rsquo;m going to exclude the first row and column, since they aren&amp;rsquo;t necessary for showing the
+actual &amp;ldquo;wedge&amp;rdquo; shape here.&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Last Name&lt;/th&gt;
+&lt;th&gt;First Name&lt;/th&gt;
+&lt;th&gt;Email&lt;/th&gt;
+&lt;th&gt;Item&lt;/th&gt;
+&lt;th&gt;Quantity&lt;/th&gt;
+&lt;th&gt;Unit Price&lt;/th&gt;
+&lt;th&gt;Subtotal&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Smith&lt;/td&gt;
+&lt;td&gt;Sue&lt;/td&gt;
+&lt;td&gt;sue@email.org&lt;/td&gt;
+&lt;td&gt;Coffee&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;1.00&lt;/td&gt;
+&lt;td&gt;1.00&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Filters&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;1.00&lt;/td&gt;
+&lt;td&gt;5.00&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Subtotal&lt;/td&gt;
+&lt;td&gt;6.00&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Bob&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Coffee&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;1.00&lt;/td&gt;
+&lt;td&gt;2.00&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Filters&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;1.00&lt;/td&gt;
+&lt;td&gt;10.00&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Subtotal&lt;/td&gt;
+&lt;td&gt;12.00&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Jones&lt;/td&gt;
+&lt;td&gt;Tom&lt;/td&gt;
+&lt;td&gt;tom@email.org&lt;/td&gt;
+&lt;td&gt;Coffee&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;1.00&lt;/td&gt;
+&lt;td&gt;3.00&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Subtotal&lt;/td&gt;
+&lt;td&gt;3.00&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Ana&lt;/td&gt;
+&lt;td&gt;ana@email.org&lt;/td&gt;
+&lt;td&gt;Coffee&lt;/td&gt;
+&lt;td&gt;8&lt;/td&gt;
+&lt;td&gt;1.00&lt;/td&gt;
+&lt;td&gt;8.00&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Subtotal&lt;/td&gt;
+&lt;td&gt;8.00&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Total&lt;/td&gt;
+&lt;td&gt;29.00&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Fortunately, a little bit of negotiating with this data in R using the &lt;code&gt;tidyverse&lt;/code&gt; packages
+can solve this pretty quickly.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# Assume the CSV has already been read in and we&#39;ve already removed
+# the empty first column and row, moved the headers to their proper
+# place, and stuck it all in a data.frame named `dat`.
+#
+# We still have yet to fix the column types.
+
+library(tidyverse)
+
+dat &amp;lt;-
+  dat %&amp;gt;%
+  fill(`Last Name`, `First Name`)
+
+# At this point we&#39;re doing pretty good, but we still have to deal
+# with the Subtotal and Total rows. We&#39;ll fall back on `plyr` for
+# this. The reason we need to go there is because of &amp;quot;Bob&amp;quot;.
+# He doesn&#39;t have an email address, and we don&#39;t want to carry
+# &amp;quot;Sue&#39;s&amp;quot; email address down to him. Using `ddply` will let us
+# be flexible in how we handle these different things.
+
+library(plyr)
+
+dat &amp;lt;- ddply(
+  dat,
+  c(&#39;Last Name&#39;, &#39;First Name&#39;),
+  function(x) {
+    x &amp;lt;- x[!is.na(x$Item), ]
+    x &amp;lt;- x %&amp;gt;% fill(Email)
+    return(x)
+  }
+)
+
+dat$`Unit Price` &amp;lt;- as_numeric(dat$`Unit Price`)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This one is a fairly contrived example, but more complicated specimen of this ilk exist, which
+may require you to begin by filling just one or two columns, performing other operations, and
+then continuing with the fill.&lt;/p&gt;
+
+&lt;p&gt;So, how can you prevent this in the first place? Evangelism. Pure and simple. Show people a
+better way and make them believe that it is a better way.
+However, if they&amp;rsquo;re really that dedicated to Excel, you may not be able to sway them.&lt;/p&gt;
+
+&lt;p&gt;Good luck!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
