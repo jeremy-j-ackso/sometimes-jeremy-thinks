@@ -27,7 +27,7 @@ weight = 5
 Hi, I'm Jeremy.
 I really like writing code and trying to figure out things that are definitely
 beyond my skill level.
-I pretty sure that's the best way that I learn because you may not know at the
+I'm pretty sure that's the best way that I learn because you may not know at the
 outset what you need to know in order to accomplish your goal, but you're pretty
 likely to learn it on the way.
 
