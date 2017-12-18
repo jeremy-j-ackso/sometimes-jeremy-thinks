@@ -11,6 +11,382 @@
     <atom:link href="/post/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Why I Use Vagrant So Much</title>
+      <link>https://ackso.net/post/why-i-use-vagrant-so-much/</link>
+      <pubDate>Sun, 17 Dec 2017 17:03:13 -0700</pubDate>
+      
+      <guid>https://ackso.net/post/why-i-use-vagrant-so-much/</guid>
+      <description>
+
+&lt;p&gt;I use &lt;a href=&#34;https://vagrantup.com&#34; target=&#34;_blank&#34;&gt;Vagrant&lt;/a&gt; for a bunch of different tasks.
+If I&amp;rsquo;m forced to use a Windows-based workstation I like to use Vagrant so that I have a standard
+Linux virtual machine available to me at all times so that I can do basic types of tasks
+that I might need &lt;code&gt;bash&lt;/code&gt;, &lt;code&gt;python&lt;/code&gt;, &lt;code&gt;ruby&lt;/code&gt;, or &lt;code&gt;gnu-utils&lt;/code&gt; for.
+I also use it for what it&amp;rsquo;s mostly intended for: &lt;strong&gt;having a development environment that mimics
+my targetted deployment environment in as many ways as possible.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Suppose that I&amp;rsquo;m working on a MEAN stack website.
+I probably don&amp;rsquo;t want to actually just build it on my machine, especially if I&amp;rsquo;m working with
+someone else.
+Yes, my personal machines all use Debian Stable, which should be just fine for development that
+targets an Ubuntu VM in the cloud, or on a VPS, but my personal machines also have a bunch of
+software installed that has nothing to do with the operation of a website.
+I&amp;rsquo;m talking about things like window and desktop managers, web browsers, my time tracking
+application, sqlite, and lots of other software that&amp;rsquo;s out there.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s complicate this further and suppose that I&amp;rsquo;m collaborating on this with a teammate who&amp;rsquo;s
+on a Mac.
+Just for the heck of it, let&amp;rsquo;s say that we have third teammate helping us out who&amp;rsquo;s on Windows.
+They have all of their own stuff running on their machines that works in different and unique
+ways that fail to be close in any way to the deployment target.
+So in this situation, we need a way to have a common target that we can develop and test towards.
+&lt;strong&gt;This is where Vagrant comes to the rescue.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2&gt;Table of Contents&lt;/h2&gt;
+&lt;nav id=&#34;TableOfContents&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#about-vagrant&#34;&gt;About Vagrant&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#ways-that-vagrant-helps-our-work&#34;&gt;Ways that Vagrant helps our work&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#the-vagrantfile&#34;&gt;The Vagrantfile&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#launching-vagrant&#34;&gt;Launching Vagrant&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#dealing-with-misconfiguration&#34;&gt;Dealing with misconfiguration&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#wrapping-up&#34;&gt;Wrapping up&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#resources&#34;&gt;Resources&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/nav&gt;
+
+
+&lt;h1 id=&#34;about-vagrant&#34;&gt;About Vagrant&lt;/h1&gt;
+
+&lt;p&gt;Vagrant (&lt;a href=&#34;https://github.com/hashicorp/vagrant&#34; target=&#34;_blank&#34;&gt;github&lt;/a&gt;) is a tool built mostly in Ruby for
+driving Virtual Machines across different platforms in a standardized way.
+It integrates well with various configuration management tools like Chef, and is even
+capable of driving your VM&amp;rsquo;s in most, if not all, major cloud providers.&lt;/p&gt;
+
+&lt;p&gt;I (and my colleagues) predominantly use it to drive VirtualBox on our workstations,
+though we&amp;rsquo;re hoping that as our IT org moves more towards infrastructure-as-code we&amp;rsquo;ll
+be able to get them to give us standardized images as well as the ability to deploy these
+directly to our cloud provider.&lt;/p&gt;
+
+&lt;h1 id=&#34;ways-that-vagrant-helps-our-work&#34;&gt;Ways that Vagrant helps our work&lt;/h1&gt;
+
+&lt;p&gt;So far I&amp;rsquo;ve only explained how Vagrant helps my team collaborate on development towards a common
+deployment target, regardless of what kind of operating systems we&amp;rsquo;re actually running on our
+workstations.
+For actually doing the work, Vagrant also helps in bunch of other ways.&lt;/p&gt;
+
+&lt;p&gt;We automatically suppose that our ultimate deployment target is just going to be a barebones
+Linux VM, probably either CentOS or Ubuntu.
+However, we have a bunch of software that we need to install in order to be able to get a running
+website, analytics service, or database.
+Vagrant helps here because we can create provisioning scripts in something like bash (or a
+configuration management system if we were more advanced) and lets us provision, modify scripts,
+and reprovision virtual machines on our workstations in very quick iterations.
+That way, if something is messed up in the way we configured our server or software we can
+quickly detect that, fix it in the script, and then reprovision the VM to test and check it out.
+We can even include scripts to do things like configuring our &lt;code&gt;cron&lt;/code&gt; jobs, setting up &lt;code&gt;systemd&lt;/code&gt;
+so that the process running our website can start on boot and recover from failures,
+configure our webserver (like &lt;code&gt;nginx&lt;/code&gt; or &lt;code&gt;apache&lt;/code&gt;), and any number of other things that we
+would like to happen during server provisioning.
+The best part is that we haven&amp;rsquo;t wasted a dime on our actual deployment server yet!&lt;/p&gt;
+
+&lt;h1 id=&#34;the-vagrantfile&#34;&gt;The Vagrantfile&lt;/h1&gt;
+
+&lt;p&gt;You configure your VM&amp;rsquo;s using a &lt;code&gt;Vagrantfile&lt;/code&gt;, which specifies the VM image you want to use,
+the size of the VM (think CPU cores and memory), what kind of a networking situation needs to
+happen to make it similar to the deployment target (like available ports, etc), and shared
+folders (so that you can still just modify all of your code using your local text editor, and
+not whatever is available once you login to the VM).
+&lt;code&gt;Vagrantfile&lt;/code&gt;s have a lot of different configuration options, but these are the ones that are
+probably most important for a normal user, along with telling it what scripts you want it to
+run as part of the provisioning process.
+Since your &lt;code&gt;Vagrantfile&lt;/code&gt; is just ruby code, you get the benefit of being able to include it in
+your project&amp;rsquo;s repository, so that it can be easily shared with all the members of your team.&lt;/p&gt;
+
+&lt;p&gt;So let&amp;rsquo;s say that you want to use Vagrant for a project.
+Doing a basic setup is extremely easy.
+You just run &lt;code&gt;vagrant init&lt;/code&gt; and it will create a barebones &lt;code&gt;Vagrantfile&lt;/code&gt; for you to modify
+as needed.&lt;/p&gt;
+
+&lt;p&gt;So, what do you put in your &lt;code&gt;Vagrantfile&lt;/code&gt;?
+Let&amp;rsquo;s make a list about what we know about our website project:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;We need to have port 80 available.&lt;/li&gt;
+&lt;li&gt;We plan on using &lt;code&gt;nginx&lt;/code&gt; and &lt;code&gt;mysql&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;We need NodeJS, version 8.x installed.&lt;/li&gt;
+&lt;li&gt;Deployment target is Ubuntu 16.04.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;When you open your Vagrantfile, it will have a bunch of boilerplate with some sensible defaults
+and explanations about common configuration settings that you can have.
+I&amp;rsquo;m going to exclude all of that here and just put in the Vagrant configs that we actually need
+to accomplish what&amp;rsquo;s in our list.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;Vagrant.configure(&amp;quot;2&amp;quot;) do |config|
+
+  # The bento project provides high quality VM images for a number of Linux OS&#39;s.
+  config.vm.box = &amp;quot;bento/ubuntu-16.04&amp;quot;
+
+  # We need port 80 on our VM, but let&#39;s forward it port 8080 on the laptop.
+  config.vm.network &amp;quot;forwarded_port&amp;quot;, guest: 80, host: 8080
+
+  # Here&#39;s our VirtualBox configurations
+  config.vm.provider &amp;quot;virtualbox&amp;quot; do |vb|
+    # Display the VirtualBox GUI when booting the machine
+    vb.gui = false
+  
+    # Customize the amount of memory on the VM:
+    vb.memory = &amp;quot;1024&amp;quot;
+    vb.cores = &amp;quot;2&amp;quot;
+  end
+
+  # We could modify this to point at a provision script, but we&#39;ll just do it inline.
+  # Keep in mind that everything in this block is run as root at /home/vagrant.
+  config.vm.provision &amp;quot;shell&amp;quot;, inline: &amp;lt;&amp;lt;-SHELL
+    # Copied from https://github.com/nodesource/distributions
+    curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+
+    apt-get update
+    apt-get install -y nginx mysql git nodejs
+  SHELL
+
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;launching-vagrant&#34;&gt;Launching Vagrant&lt;/h1&gt;
+
+&lt;p&gt;Once the Vagrantfile is written we can launch the VM by running &lt;code&gt;vagrant up&lt;/code&gt; and we&amp;rsquo;ll soon
+have a running VM.
+Keep in mind that the first time you run &lt;code&gt;vagrant up&lt;/code&gt; for any particular Virtual Machine Image
+(&lt;code&gt;bento/ubuntu-16.04&lt;/code&gt; in this case), Vagrant will first download the Virtual Machine Image
+(called &lt;code&gt;boxes&lt;/code&gt; in Vagrant parlance) into a default VM library, then create a copy of it to be
+configured according to what you&amp;rsquo;ve specified.
+Because of this, you definitely need a fast internet connection, and ideally should have an SSD
+installed to your workstation.
+Once you have that box downloaded once, you won&amp;rsquo;t have to download it again, though Vagrant
+may let you know when a new version of the box is available for download.&lt;/p&gt;
+
+&lt;p&gt;Vagrant will also print out a bunch of messages describing what it&amp;rsquo;s doing at any given moment,
+as well as everything that gets printed to &lt;code&gt;stdout&lt;/code&gt; and &lt;code&gt;stderr&lt;/code&gt; as a result of the commands
+run in your &lt;code&gt;config.vm.provision&lt;/code&gt; block.
+When the provisioning process is complete, Vagrant will return you to your command prompt with
+either a success message or a message that there was some kind of failure.
+If it was a success, and even in some failure cases, you should now be able to log in to your
+running VM by using &lt;code&gt;vagrant ssh&lt;/code&gt;.
+Then, once you&amp;rsquo;re in you can check that everything is as you intended the configuration to be.&lt;/p&gt;
+
+&lt;h1 id=&#34;dealing-with-misconfiguration&#34;&gt;Dealing with misconfiguration&lt;/h1&gt;
+
+&lt;p&gt;If you do find a problem with your configuration you can start editing your &lt;code&gt;Vagrantfile&lt;/code&gt; and
+provisioning scripts to correct your mistakes.
+Once you&amp;rsquo;re done making your changes you reprovision the VM at a level appropriate for the change
+you&amp;rsquo;re making.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Say you&#39;re just changing a minor configuration detail, you can just run:
+vagrant reload --provision
+
+# If you made some big changes and want to start with a fresh box:
+vagrant destroy
+vagrant up
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Keep in mind that just doing &lt;code&gt;vagrant reload --provision&lt;/code&gt; will also take less time than destroying
+and starting totally fresh, so just be aware of what you&amp;rsquo;re doing and not wasting more time than
+you need to in getting your configurations correct.&lt;/p&gt;
+
+&lt;h1 id=&#34;wrapping-up&#34;&gt;Wrapping up&lt;/h1&gt;
+
+&lt;p&gt;So we&amp;rsquo;ve covered some good uses and reasons for using Vagrant, we did a quick demo showing off
+how to configure a Vagrant box for use in a project, and how to deal with configuration problems.
+Now it&amp;rsquo;s up to you to find novel uses of this great piece of software and start building
+good, reproducible software with it!&lt;/p&gt;
+
+&lt;h1 id=&#34;resources&#34;&gt;Resources&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://vagrantup.com&#34; target=&#34;_blank&#34;&gt;Vagrant&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/hashicorp/vagrant&#34; target=&#34;_blank&#34;&gt;Vagrant on Github&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://virtualbox.org&#34; target=&#34;_blank&#34;&gt;VirtualBox&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://hashicorp.com&#34; target=&#34;_blank&#34;&gt;HashiCorp, the makers of Vagrant&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/chef/bento&#34; target=&#34;_blank&#34;&gt;The Bento Project, by Chef.io&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://chef.io&#34; target=&#34;_blank&#34;&gt;Chef&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://app.hashicorp.com/boxes/search&#34; target=&#34;_blank&#34;&gt;Discover other Vagrant Boxes here&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>My Terminal Configs</title>
+      <link>https://ackso.net/post/my-terminal-configs/</link>
+      <pubDate>Sun, 17 Dec 2017 14:15:50 -0700</pubDate>
+      
+      <guid>https://ackso.net/post/my-terminal-configs/</guid>
+      <description>
+
+&lt;p&gt;It&amp;rsquo;s starting to become more popular for some hiring companies to request your
+&amp;ldquo;dot&amp;rdquo; files to show how you configure your environment.
+I figure this is probably intended to be something akin to a signalling mechanism,
+meaning that you&amp;rsquo;re into the weeds enough to know that on *NIX systems you have
+configuration files for each user on the system, typically prefixed with a &amp;ldquo;dot&amp;rdquo;.
+Hence we have files like &lt;code&gt;.bashrc&lt;/code&gt; that gets executed when you open a new bash
+session and sets up the environment for you.
+Same for vim, where you have the &lt;code&gt;.vimrc&lt;/code&gt; file.
+You can potentially have many more (including &amp;ldquo;dot&amp;rdquo; folders, like &lt;code&gt;.ssh&lt;/code&gt;), just
+depending on what software you use on a regular basis on your *NIX system.&lt;/p&gt;
+
+&lt;p&gt;So I want to show and explain a few of my &amp;ldquo;dot&amp;rdquo; files here, but first, I have a gripe.&lt;/p&gt;
+
+&lt;p&gt;The point of having systems that, to whatever extent they may, conform to POSIX
+standards is to facilitate interoperability.
+Not only of systems, but users also.
+That&amp;rsquo;s why things like &lt;code&gt;vi&lt;/code&gt;, &lt;code&gt;nano&lt;/code&gt;, and &lt;code&gt;gnu-utils&lt;/code&gt; are pretty uniformly auto-installed
+on *NIX systems.
+That makes it easy for me, Sue the Admin, or Joe the Developer to log in to a
+system they never have and at least know the tools available to them.
+For that reason, I&amp;rsquo;m not a huge fan of doing a lot of customization of my &amp;ldquo;dot&amp;rdquo; files
+and I try to encourage people to know the defaults quite well prior to customizing.&lt;/p&gt;
+
+&lt;p&gt;End of gripe.&lt;/p&gt;
+
+&lt;h2&gt;Table of Contents&lt;/h2&gt;
+&lt;nav id=&#34;TableOfContents&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#justification&#34;&gt;Justification&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#bashrc&#34;&gt;.bashrc&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#vimrc&#34;&gt;.vimrc&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#tmux-conf&#34;&gt;.tmux.conf&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/nav&gt;
+
+
+&lt;h1 id=&#34;justification&#34;&gt;Justification&lt;/h1&gt;
+
+&lt;p&gt;So I just finished up my gripe about not using the standard tools and I&amp;rsquo;m about to start
+talking about &lt;code&gt;vim&lt;/code&gt; and &lt;code&gt;tmux&lt;/code&gt;, neither of which fall into that &amp;ldquo;ubiquitously installed&amp;rdquo;
+category.
+Well, there&amp;rsquo;s a reason for that.&lt;/p&gt;
+
+&lt;p&gt;I like &lt;code&gt;vi&lt;/code&gt; well enough and can definitely use it without any troubles.
+However, &lt;code&gt;vim&lt;/code&gt; gives me some added functionality that is really useful for doing
+development work, particularly &lt;code&gt;syntastic&lt;/code&gt; for syntax checking/linting, &lt;code&gt;EDITORCONFIG&lt;/code&gt;,
+and some additional keybind functionalities that are just missing from &lt;code&gt;vi&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Then there&amp;rsquo;s &lt;code&gt;tmux&lt;/code&gt;.
+Again, &lt;code&gt;screen&lt;/code&gt; is perfectly good and I can use it well enough, but there were just
+some things that didn&amp;rsquo;t work the way I was hoping.
+For instance, &lt;code&gt;screen&lt;/code&gt; requires a lot more combination keybinds to do things that
+I would hope would be much simpler, such as splitting panes.
+Also, &lt;code&gt;tmux&lt;/code&gt;&amp;rsquo;s configurability is quite a bit stronger.&lt;/p&gt;
+
+&lt;h1 id=&#34;bashrc&#34;&gt;.bashrc&lt;/h1&gt;
+
+&lt;p&gt;My &lt;code&gt;.bashrc&lt;/code&gt; is fairly plain-jane.
+The only things that I&amp;rsquo;ve added are to put a few things in &lt;code&gt;$PATH&lt;/code&gt; that are not
+enabled by default, like snaps (I&amp;rsquo;m on BunsenLabs Helium/Debian Stretch).
+I don&amp;rsquo;t have any special aliases for things that I use a lot because I value
+that muscle memory of being able to quickly use the standard built-in tools.&lt;/p&gt;
+
+&lt;p&gt;So, my &lt;code&gt;.bashrc&lt;/code&gt; is the standard &lt;code&gt;.bashrc&lt;/code&gt; that you get when creating a new user
+on a Debian system, with the following two lines added at the end.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;export PATH=$PATH:/snap/bin
+export EDITOR=&#39;vim&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;vimrc&#34;&gt;.vimrc&lt;/h1&gt;
+
+&lt;p&gt;My &lt;code&gt;.vimrc&lt;/code&gt; has a bit more customization for things like &lt;code&gt;EDITORCONFIG&lt;/code&gt;, &lt;code&gt;syntastic&lt;/code&gt;,
+and the &lt;code&gt;solarized&lt;/code&gt; color scheme.
+Still no special aliases for doing special things.
+You&amp;rsquo;ll notice nothing about &lt;code&gt;EDITORCONFIG&lt;/code&gt; here, but it&amp;rsquo;s being brought in by &lt;code&gt;pathogen&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;set nocompatible
+syntax on
+set autoindent		&amp;quot; always set autoindenting on
+set smartindent
+set nowrap		&amp;quot; turns off text wrapping
+set number 		&amp;quot; turns line numbering on
+colorscheme solarized
+set background=dark
+set ruler		&amp;quot; show the cursor position all the time
+
+set smarttab
+set softtabstop=2
+set expandtab
+set shiftwidth=2
+set tabstop=2
+filetype indent plugin on
+set showcmd
+set hlsearch
+set ignorecase
+set smartcase
+set ruler
+set laststatus=2
+set confirm
+
+set cmdheight=2
+
+&amp;quot; Disable python-mode in favor of syntastic
+let g:pymode_lint = 0
+let g:pymode_lint_on_write = 0
+
+&amp;quot; Syntastic setup
+let g:syntastic_aggregate_errors = 1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_auto_jump = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = [&#39;eslint&#39;]
+let g:syntastic_python_checkers = [&#39;pep8&#39;, &#39;python&#39;]
+let g:syntastic_tex_checkers = [&#39;lacheck&#39;]
+
+let Vimplate=&amp;quot;/usr/bin/vimplate&amp;quot;
+
+&amp;quot; Pathogen config
+execute pathogen#infect()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;tmux-conf&#34;&gt;.tmux.conf&lt;/h1&gt;
+
+&lt;p&gt;Again, not doing much special with tmux.
+I&amp;rsquo;ve considered setting up my usual pane layout to automatically be used when I
+start a new &lt;code&gt;tmux&lt;/code&gt; session, but I just haven&amp;rsquo;t gotten around to it.
+Most of these are the defaults.
+The only ones I&amp;rsquo;ve changed are to have a 256 color terminal (because baller),
+change the pane index to be 1-based instead of 0-based because it makes it easier
+to switch panes one-handed, letting tmux now that I use vim, and making the pane
+numbers display a bit longer on screen to give me a second to decide which pane
+I want to switch to.&lt;/p&gt;
+
+&lt;p&gt;My standard setup is 3-panes, with my main pane vertical on the right, and the other
+two panes split horizontally on the left.
+I like this better since it puts the vertical center line between the panes near the
+middle of my screen, and therefore the left edge of my text editor is pretty close
+to the middle of the screen as well.
+&lt;code&gt;tmux&lt;/code&gt; actually has a layout preset that&amp;rsquo;s pretty similar to this called &lt;code&gt;main-vertical&lt;/code&gt;,
+however it puts the large &amp;ldquo;main&amp;rdquo; vertical pane on the left instead of the right.
+Putting my main pane closer to the middle of the screen is definitely a bit more
+natural since that&amp;rsquo;s where my attention will naturally be drawn.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;set -g default-terminal &amp;quot;tmux-256color&amp;quot;
+set -g pane-base-index 1
+set-window-option -g mode-keys vi
+set -g display-panes-time 3000
+set -g display-time 3000
+set -g status-fg cyan # ThG original was: white
+set -g status-bg default
+set -g status-attr default
+set -g status-left &amp;quot;&amp;quot;
+if &#39;[ -z &amp;quot;$DISPLAY&amp;quot; ]&#39; &#39;set -g status-left &amp;quot;[#[fg=green] #H #[default]]&amp;quot;&#39;
+if &#39;[ -z &amp;quot;$DISPLAY&amp;quot; ]&#39; &#39;set -g status-right &amp;quot;[ #[fg=magenta]#(cat /proc/loadavg | cut -d \&amp;quot; \&amp;quot; -f 1,2,3)#[default] ][ #[fg=cyan,bright]%a %Y-%m-%d %H:%M #[default]]&amp;quot;&#39;
+if &#39;[ -z &amp;quot;$DISPLAY&amp;quot; ]&#39; &#39;set -g status-right-length 50&#39;
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>The Wedge Pattern</title>
       <link>https://ackso.net/post/the-wedge-pattern/</link>
       <pubDate>Sat, 16 Dec 2017 22:30:48 -0700</pubDate>

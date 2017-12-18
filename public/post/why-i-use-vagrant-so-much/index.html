@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.31.1" />
+  <meta name="author" content="Jeremy Jackson">
+  <meta name="description" content="Software Engineering and Data Science">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://ackso.net/post/why-i-use-vagrant-so-much/">
+
+  
+  
+
+
+  
+
+  
+  
+  
+  
+    
+  
+  
+    
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+    
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  
+  
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+
+  
+  <link rel="alternate" href="https://ackso.net/index.xml" type="application/rss+xml" title="Sometimes Jeremy Thinks">
+  <link rel="feed" href="https://ackso.net/index.xml" type="application/rss+xml" title="Sometimes Jeremy Thinks">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://ackso.net/post/why-i-use-vagrant-so-much/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@jeremy_j_ackso">
+  <meta property="twitter:creator" content="@jeremy_j_ackso">
+  
+  <meta property="og:site_name" content="Sometimes Jeremy Thinks">
+  <meta property="og:url" content="https://ackso.net/post/why-i-use-vagrant-so-much/">
+  <meta property="og:title" content="Why I Use Vagrant So Much | Sometimes Jeremy Thinks">
+  <meta property="og:description" content="">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2017-12-17T17:03:13-07:00">
+  
+  <meta property="article:modified_time" content="2017-12-17T17:03:13-07:00">
+  
+
+  
+
+  <title>Why I Use Vagrant So Much | Sometimes Jeremy Thinks</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">Sometimes Jeremy Thinks</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#projects">
+            
+            <span>Projects</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+    <div class="article-inner">
+      <h1 itemprop="name">Why I Use Vagrant So Much</h1>
+
+      
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2017-12-17 17:03:13 -0700 MST" itemprop="datePublished">
+      2017-12-17
+    </time>
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    8 min read
+  </span>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <a href="https://ackso.net/post/why-i-use-vagrant-so-much/#disqus_thread"></a>
+  
+
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Why%20I%20Use%20Vagrant%20So%20Much&amp;url=https%3a%2f%2fackso.net%2fpost%2fwhy-i-use-vagrant-so-much%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fackso.net%2fpost%2fwhy-i-use-vagrant-so-much%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fackso.net%2fpost%2fwhy-i-use-vagrant-so-much%2f&amp;title=Why%20I%20Use%20Vagrant%20So%20Much"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=https%3a%2f%2fackso.net%2fpost%2fwhy-i-use-vagrant-so-much%2f&amp;title=Why%20I%20Use%20Vagrant%20So%20Much"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Why%20I%20Use%20Vagrant%20So%20Much&amp;body=https%3a%2f%2fackso.net%2fpost%2fwhy-i-use-vagrant-so-much%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+      <div class="article-style" itemprop="articleBody">
+        
+
+<p>I use <a href="https://vagrantup.com" target="_blank">Vagrant</a> for a bunch of different tasks.
+If I&rsquo;m forced to use a Windows-based workstation I like to use Vagrant so that I have a standard
+Linux virtual machine available to me at all times so that I can do basic types of tasks
+that I might need <code>bash</code>, <code>python</code>, <code>ruby</code>, or <code>gnu-utils</code> for.
+I also use it for what it&rsquo;s mostly intended for: <strong>having a development environment that mimics
+my targetted deployment environment in as many ways as possible.</strong></p>
+
+<p>Suppose that I&rsquo;m working on a MEAN stack website.
+I probably don&rsquo;t want to actually just build it on my machine, especially if I&rsquo;m working with
+someone else.
+Yes, my personal machines all use Debian Stable, which should be just fine for development that
+targets an Ubuntu VM in the cloud, or on a VPS, but my personal machines also have a bunch of
+software installed that has nothing to do with the operation of a website.
+I&rsquo;m talking about things like window and desktop managers, web browsers, my time tracking
+application, sqlite, and lots of other software that&rsquo;s out there.</p>
+
+<p>Let&rsquo;s complicate this further and suppose that I&rsquo;m collaborating on this with a teammate who&rsquo;s
+on a Mac.
+Just for the heck of it, let&rsquo;s say that we have third teammate helping us out who&rsquo;s on Windows.
+They have all of their own stuff running on their machines that works in different and unique
+ways that fail to be close in any way to the deployment target.
+So in this situation, we need a way to have a common target that we can develop and test towards.
+<strong>This is where Vagrant comes to the rescue.</strong></p>
+
+<h2>Table of Contents</h2>
+<nav id="TableOfContents">
+<ul>
+<li><a href="#about-vagrant">About Vagrant</a></li>
+<li><a href="#ways-that-vagrant-helps-our-work">Ways that Vagrant helps our work</a></li>
+<li><a href="#the-vagrantfile">The Vagrantfile</a></li>
+<li><a href="#launching-vagrant">Launching Vagrant</a></li>
+<li><a href="#dealing-with-misconfiguration">Dealing with misconfiguration</a></li>
+<li><a href="#wrapping-up">Wrapping up</a></li>
+<li><a href="#resources">Resources</a></li>
+</ul>
+</nav>
+
+
+<h1 id="about-vagrant">About Vagrant</h1>
+
+<p>Vagrant (<a href="https://github.com/hashicorp/vagrant" target="_blank">github</a>) is a tool built mostly in Ruby for
+driving Virtual Machines across different platforms in a standardized way.
+It integrates well with various configuration management tools like Chef, and is even
+capable of driving your VM&rsquo;s in most, if not all, major cloud providers.</p>
+
+<p>I (and my colleagues) predominantly use it to drive VirtualBox on our workstations,
+though we&rsquo;re hoping that as our IT org moves more towards infrastructure-as-code we&rsquo;ll
+be able to get them to give us standardized images as well as the ability to deploy these
+directly to our cloud provider.</p>
+
+<h1 id="ways-that-vagrant-helps-our-work">Ways that Vagrant helps our work</h1>
+
+<p>So far I&rsquo;ve only explained how Vagrant helps my team collaborate on development towards a common
+deployment target, regardless of what kind of operating systems we&rsquo;re actually running on our
+workstations.
+For actually doing the work, Vagrant also helps in bunch of other ways.</p>
+
+<p>We automatically suppose that our ultimate deployment target is just going to be a barebones
+Linux VM, probably either CentOS or Ubuntu.
+However, we have a bunch of software that we need to install in order to be able to get a running
+website, analytics service, or database.
+Vagrant helps here because we can create provisioning scripts in something like bash (or a
+configuration management system if we were more advanced) and lets us provision, modify scripts,
+and reprovision virtual machines on our workstations in very quick iterations.
+That way, if something is messed up in the way we configured our server or software we can
+quickly detect that, fix it in the script, and then reprovision the VM to test and check it out.
+We can even include scripts to do things like configuring our <code>cron</code> jobs, setting up <code>systemd</code>
+so that the process running our website can start on boot and recover from failures,
+configure our webserver (like <code>nginx</code> or <code>apache</code>), and any number of other things that we
+would like to happen during server provisioning.
+The best part is that we haven&rsquo;t wasted a dime on our actual deployment server yet!</p>
+
+<h1 id="the-vagrantfile">The Vagrantfile</h1>
+
+<p>You configure your VM&rsquo;s using a <code>Vagrantfile</code>, which specifies the VM image you want to use,
+the size of the VM (think CPU cores and memory), what kind of a networking situation needs to
+happen to make it similar to the deployment target (like available ports, etc), and shared
+folders (so that you can still just modify all of your code using your local text editor, and
+not whatever is available once you login to the VM).
+<code>Vagrantfile</code>s have a lot of different configuration options, but these are the ones that are
+probably most important for a normal user, along with telling it what scripts you want it to
+run as part of the provisioning process.
+Since your <code>Vagrantfile</code> is just ruby code, you get the benefit of being able to include it in
+your project&rsquo;s repository, so that it can be easily shared with all the members of your team.</p>
+
+<p>So let&rsquo;s say that you want to use Vagrant for a project.
+Doing a basic setup is extremely easy.
+You just run <code>vagrant init</code> and it will create a barebones <code>Vagrantfile</code> for you to modify
+as needed.</p>
+
+<p>So, what do you put in your <code>Vagrantfile</code>?
+Let&rsquo;s make a list about what we know about our website project:</p>
+
+<ul>
+<li>We need to have port 80 available.</li>
+<li>We plan on using <code>nginx</code> and <code>mysql</code>.</li>
+<li>We need NodeJS, version 8.x installed.</li>
+<li>Deployment target is Ubuntu 16.04.</li>
+</ul>
+
+<p>When you open your Vagrantfile, it will have a bunch of boilerplate with some sensible defaults
+and explanations about common configuration settings that you can have.
+I&rsquo;m going to exclude all of that here and just put in the Vagrant configs that we actually need
+to accomplish what&rsquo;s in our list.</p>
+
+<pre><code class="language-ruby">Vagrant.configure(&quot;2&quot;) do |config|
+
+  # The bento project provides high quality VM images for a number of Linux OS's.
+  config.vm.box = &quot;bento/ubuntu-16.04&quot;
+
+  # We need port 80 on our VM, but let's forward it port 8080 on the laptop.
+  config.vm.network &quot;forwarded_port&quot;, guest: 80, host: 8080
+
+  # Here's our VirtualBox configurations
+  config.vm.provider &quot;virtualbox&quot; do |vb|
+    # Display the VirtualBox GUI when booting the machine
+    vb.gui = false
+  
+    # Customize the amount of memory on the VM:
+    vb.memory = &quot;1024&quot;
+    vb.cores = &quot;2&quot;
+  end
+
+  # We could modify this to point at a provision script, but we'll just do it inline.
+  # Keep in mind that everything in this block is run as root at /home/vagrant.
+  config.vm.provision &quot;shell&quot;, inline: &lt;&lt;-SHELL
+    # Copied from https://github.com/nodesource/distributions
+    curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+
+    apt-get update
+    apt-get install -y nginx mysql git nodejs
+  SHELL
+
+end
+</code></pre>
+
+<h1 id="launching-vagrant">Launching Vagrant</h1>
+
+<p>Once the Vagrantfile is written we can launch the VM by running <code>vagrant up</code> and we&rsquo;ll soon
+have a running VM.
+Keep in mind that the first time you run <code>vagrant up</code> for any particular Virtual Machine Image
+(<code>bento/ubuntu-16.04</code> in this case), Vagrant will first download the Virtual Machine Image
+(called <code>boxes</code> in Vagrant parlance) into a default VM library, then create a copy of it to be
+configured according to what you&rsquo;ve specified.
+Because of this, you definitely need a fast internet connection, and ideally should have an SSD
+installed to your workstation.
+Once you have that box downloaded once, you won&rsquo;t have to download it again, though Vagrant
+may let you know when a new version of the box is available for download.</p>
+
+<p>Vagrant will also print out a bunch of messages describing what it&rsquo;s doing at any given moment,
+as well as everything that gets printed to <code>stdout</code> and <code>stderr</code> as a result of the commands
+run in your <code>config.vm.provision</code> block.
+When the provisioning process is complete, Vagrant will return you to your command prompt with
+either a success message or a message that there was some kind of failure.
+If it was a success, and even in some failure cases, you should now be able to log in to your
+running VM by using <code>vagrant ssh</code>.
+Then, once you&rsquo;re in you can check that everything is as you intended the configuration to be.</p>
+
+<h1 id="dealing-with-misconfiguration">Dealing with misconfiguration</h1>
+
+<p>If you do find a problem with your configuration you can start editing your <code>Vagrantfile</code> and
+provisioning scripts to correct your mistakes.
+Once you&rsquo;re done making your changes you reprovision the VM at a level appropriate for the change
+you&rsquo;re making.</p>
+
+<pre><code class="language-bash"># Say you're just changing a minor configuration detail, you can just run:
+vagrant reload --provision
+
+# If you made some big changes and want to start with a fresh box:
+vagrant destroy
+vagrant up
+</code></pre>
+
+<p>Keep in mind that just doing <code>vagrant reload --provision</code> will also take less time than destroying
+and starting totally fresh, so just be aware of what you&rsquo;re doing and not wasting more time than
+you need to in getting your configurations correct.</p>
+
+<h1 id="wrapping-up">Wrapping up</h1>
+
+<p>So we&rsquo;ve covered some good uses and reasons for using Vagrant, we did a quick demo showing off
+how to configure a Vagrant box for use in a project, and how to deal with configuration problems.
+Now it&rsquo;s up to you to find novel uses of this great piece of software and start building
+good, reproducible software with it!</p>
+
+<h1 id="resources">Resources</h1>
+
+<ul>
+<li><a href="https://vagrantup.com" target="_blank">Vagrant</a></li>
+<li><a href="https://github.com/hashicorp/vagrant" target="_blank">Vagrant on Github</a></li>
+<li><a href="https://virtualbox.org" target="_blank">VirtualBox</a></li>
+<li><a href="https://hashicorp.com" target="_blank">HashiCorp, the makers of Vagrant</a></li>
+<li><a href="https://github.com/chef/bento" target="_blank">The Bento Project, by Chef.io</a></li>
+<li><a href="https://chef.io" target="_blank">Chef</a></li>
+<li><a href="https://app.hashicorp.com/boxes/search" target="_blank">Discover other Vagrant Boxes here</a></li>
+</ul>
+
+      </div>
+
+      
+
+
+<div class="article-tags">
+  
+  <a class="btn btn-primary btn-outline" href="/tags/vagrant">vagrant</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/virtualization">virtualization</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/simulation">simulation</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/reproducibility">reproducibility</a>
+  
+</div>
+
+
+
+    </div>
+  </div>
+
+</article>
+
+
+
+
+
+
+<div class="article-container">
+  
+<section id="comments">
+  <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "ackso-net.disqus.com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2017 Jeremy T Jackson &middot; 
+
+      Powered by the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+    <script id="dsq-count-scr" src="//ackso-net.disqus.com.disqus.com/count.js" async></script>
+    
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+    
+    
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+      
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
+
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/python.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/bash.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/css.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/diff.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/javascript.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/json.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/markdown.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/nginx.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/processing.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/sql.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/tex.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/vim.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML" integrity="sha512-tOav5w1OjvsSJzePRtt2uQPFwBoHt1VZcUq8l8nm5284LEKE9FSJBQryzMBzHxY5P0zRdNqEcpLIRVYFNgu1jw==" crossorigin="anonymous"></script>
+    
+    
+
+  </body>
+</html>
+

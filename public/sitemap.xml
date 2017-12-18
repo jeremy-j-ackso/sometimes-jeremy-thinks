@@ -5,6 +5,24 @@
     
     <url>
     
+      <loc>https://ackso.net/post/why-i-use-vagrant-so-much/</loc>
+      <lastmod>2017-12-17T17:03:13-07:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://ackso.net/post/my-terminal-configs/</loc>
+      <lastmod>2017-12-17T14:15:50-07:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>https://ackso.net/post/the-wedge-pattern/</loc>
       <lastmod>2017-12-16T22:30:48-07:00</lastmod>
     </url>
@@ -69,6 +87,26 @@
     
     <url>
     
+      <loc>https://ackso.net/tags/configs/</loc>
+      <lastmod>2017-12-17T14:15:50-07:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://ackso.net/tags/environment/</loc>
+      <lastmod>2017-12-17T14:15:50-07:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>https://ackso.net/tags/excel-is-terrible/</loc>
       <lastmod>2017-12-16T22:30:48-07:00</lastmod>
       <priority>0</priority>
@@ -98,6 +136,26 @@
     
     <url>
     
+      <loc>https://ackso.net/tags/reproducibility/</loc>
+      <lastmod>2017-12-17T17:03:13-07:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://ackso.net/tags/simulation/</loc>
+      <lastmod>2017-12-17T17:03:13-07:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>https://ackso.net/</loc>
       <lastmod>2017-10-15T00:00:00-06:00</lastmod>
       <priority>0</priority>
@@ -110,6 +168,26 @@
     
       <loc>https://ackso.net/tags/</loc>
       <lastmod>2017-01-01T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://ackso.net/tags/vagrant/</loc>
+      <lastmod>2017-12-17T17:03:13-07:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://ackso.net/tags/virtualization/</loc>
+      <lastmod>2017-12-17T17:03:13-07:00</lastmod>
       <priority>0</priority>
     </url>
     
