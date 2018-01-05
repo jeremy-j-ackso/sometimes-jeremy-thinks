@@ -7,8 +7,296 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2017 Jeremy T Jackson</copyright>
-    <lastBuildDate>Sat, 23 Dec 2017 09:40:33 -0700</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jan 2018 21:41:19 -0700</lastBuildDate>
     <atom:link href="/project/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Exercises for Programmers 3 - NODEJS</title>
+      <link>https://ackso.net/project/exercises-for-programmers-3/</link>
+      <pubDate>Thu, 04 Jan 2018 21:41:19 -0700</pubDate>
+      
+      <guid>https://ackso.net/project/exercises-for-programmers-3/</guid>
+      <description>
+
+&lt;p&gt;I&amp;rsquo;m in the midst of working through Chapter 3 of
+&lt;a href=&#34;https://pragprog.com/book/bhwb/exercises-for-programmers&#34; target=&#34;_blank&#34;&gt;Exercises for Programmers&lt;/a&gt;
+and decided to write an update on my progress because some of these
+individual exercises are starting to get a bit long and convoluted,
+so I feel like some of them might benefit from being stand-alone posts.
+That will certainly be true for Exercise 10, which I finished up last
+night, so for this post I&amp;rsquo;m just going to talk about Exercises 7-9.&lt;/p&gt;
+
+&lt;p&gt;Also, &lt;a href=&#34;https://github.com/jeremy-j-ackso/exercises-for-programmers-nodejs&#34; target=&#34;_blank&#34;&gt;here&amp;rsquo;s my Github repo for this project.&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Table of Contents&lt;/h2&gt;
+&lt;nav id=&#34;TableOfContents&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#background&#34;&gt;Background&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#exercise-7-area-of-a-rectangular-room&#34;&gt;Exercise 7 - Area of a Rectangular Room&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#exercise-8-pizza-party&#34;&gt;Exercise 8 - Pizza Party&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#exercise-9-paint-calculator&#34;&gt;Exercise 9 - Paint Calculator&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/nav&gt;
+
+
+&lt;h1 id=&#34;background&#34;&gt;Background&lt;/h1&gt;
+
+&lt;p&gt;This chapter is all about calculations.
+All of the exercises have you taking some input, doing some calculations,
+and then writing the output.
+As you might expect you end up getting cozy with your basic 4 functions,
+&lt;code&gt;Math&lt;/code&gt; and &lt;code&gt;Number&lt;/code&gt; methods like rounding and defining decimal precision, and validating
+that user inputs are parseable digits.
+The complexity that is getting introduced in this chapter also really
+forces the issue of making sure that you break out your functionality
+into smaller component functions, and you can find some rewarding opportunities
+for using arguments to slightly modify your function outputs, for instance
+when you&amp;rsquo;re converting between imperial and metric units.&lt;/p&gt;
+
+&lt;p&gt;As you might expect, with more component functions comes more tests.
+Like I mentioned, last night I got through Exercise 10, and already my test file
+for this chapter is around 750 lines long.
+I have three more exercises to go for this chapter, so I&amp;rsquo;m figuring it will grow
+to be over 1000 lines before this chapter ends.
+That being the case, I&amp;rsquo;m not going to post my tests in here because they&amp;rsquo;re
+getting to be rather boilerplate-y and I personally wouldn&amp;rsquo;t be interested in scrolling
+for ages through similar-looking mocha tests.
+However you can definitely go check the tests out
+&lt;a href=&#34;https://github.com/jeremy-j-ackso/exercises-for-programmers-nodejs/blob/master/test/ch3.test.js&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;My scripts that are implementing the &lt;code&gt;readline&lt;/code&gt; functionality for each of the exercises
+are also pretty standard for the three exercises here, so I&amp;rsquo;ll just be linking back to
+those on Github rather than showing them here.&lt;/p&gt;
+
+&lt;p&gt;The most interesting thing I learned from doing these exercises is that JavaScript
+parses &lt;a href=&#34;https://semver.org/&#34; target=&#34;_blank&#34;&gt;semantic versioning numbers&lt;/a&gt; as Floats (or Integers)
+of the Major version, the first dot as the decimal point, and the Minor version.
+It ignores the second dot and the Patch version.
+This means that:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;parseFloat(&#39;1.2.3&#39;) // returns 1.2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I had to write tests for this and that also inspired some of my later usage of regular
+expressions to validate proper numeric input provided as strings.
+That&amp;rsquo;s also something I&amp;rsquo;m going to have to refactor for if I ever go back and do that.
+The only reason I discovered this is that when I was writing up my tests I realized
+that it should cause the functions to throw an error and I had no idea if it would
+or not.&lt;/p&gt;
+
+&lt;p&gt;This was just something that popped into my head and I&amp;rsquo;m glad I wrote that test because
+JavaScript is perfectly happy to pretend that these are numbers and will do its
+best to accomodate them as such.&lt;/p&gt;
+
+&lt;p&gt;I also tested this in Python and R, and both of them generated errors when attempting
+to convert the semver string to some type of numeric, which is what I would have
+expected from JavaScript as well.&lt;/p&gt;
+
+&lt;h1 id=&#34;exercise-7-area-of-a-rectangular-room&#34;&gt;Exercise 7 - Area of a Rectangular Room&lt;/h1&gt;
+
+&lt;p&gt;The most fancy thing here is the use of the &lt;code&gt;*=&lt;/code&gt; infix operator to convert
+from imperial to metric in the case that the &lt;code&gt;units&lt;/code&gt; required is metric.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/jeremy-j-ackso/exercises-for-programmers-nodejs/blob/master/ch3/area-of-rectangle-room.js&#34; target=&#34;_blank&#34;&gt;Here&amp;rsquo;s the &lt;code&gt;readline&lt;/code&gt; function calling it.&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;/* eslint comma-dangle: &amp;quot;off&amp;quot;, comma-spacing: &amp;quot;off&amp;quot; */
+
+function sqft(length, width) {
+  const invalids = [null, undefined,]
+  if (invalids.includes(length) || invalids.includes(width)) {
+    throw new Error(&#39;inputs must not be null or undefined&#39;)
+  }
+
+  if (!parseFloat(length) || !parseFloat(width)) {
+    throw new Error(&#39;length and width must be digits&#39;)
+  }
+
+  return `${areaOfRectangle(length, width, &#39;feet&#39;)} square feet`
+}
+
+function sqmeters(length, width) {
+  const invalids = [null, undefined,]
+  if (invalids.includes(length) || invalids.includes(width)) {
+    throw new Error(&#39;inputs must not be null or undefined&#39;)
+  }
+
+  if (!parseFloat(length) || !parseFloat(width)) {
+    throw new Error(&#39;length and width must be digits&#39;)
+  }
+
+  return `${areaOfRectangle(length, width, &#39;meters&#39;)} square meters`
+}
+
+function dimensions(length, width) {
+  const invalids = [null, undefined,]
+  if (invalids.includes(length) || invalids.includes(width)) {
+    throw new Error(&#39;inputs must not be null or undefined&#39;)
+  }
+
+  if (!parseFloat(length) || !parseFloat(width)) {
+    throw new Error(&#39;length and width must be digits&#39;)
+  }
+
+  return `You entered dimensions of ${length} feet by ${width} feet.`
+}
+
+function areaOfRectangle(length, width, unit) {
+  const invalids = [null, undefined,]
+  if (invalids.includes(length) || invalids.includes(width) || invalids.includes(unit)) {
+    throw new Error(&#39;inputs must not be null or undefined&#39;)
+  }
+
+  if (![&#39;feet&#39;, &#39;meters&#39;].includes(unit)) {
+    throw new Error(&#39;units must be either \&#39;feet\&#39; or \&#39;meters\&#39;&#39;)
+  }
+
+  if (!parseFloat(length) || !parseFloat(width)) {
+    throw new Error(&#39;length and width must be digits&#39;)
+  }
+
+  let area = length * width
+  if (unit === &#39;meters&#39;) area *= 0.09290304
+  return area.toFixed(3)
+}
+
+module.exports = {
+  dimensions,
+  sqft,
+  sqmeters,
+  areaOfRectangle,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;exercise-8-pizza-party&#34;&gt;Exercise 8 - Pizza Party&lt;/h1&gt;
+
+&lt;p&gt;This one has you doing both integer division and grabbing remainders!
+I also like that I had to write the &lt;code&gt;pluralizer()&lt;/code&gt; function to correctly
+decide what word to use based on the number values.
+Also, &lt;code&gt;aboutTheParty()&lt;/code&gt; has some extreme string templating going on.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/jeremy-j-ackso/exercises-for-programmers-nodejs/blob/master/ch3/pizza-party.js&#34; target=&#34;_blank&#34;&gt;Here&amp;rsquo;s the &lt;code&gt;readline&lt;/code&gt; function calling it.&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;function remainingPieces(people, pizzas, pieces) {
+  if (typeof people !== &#39;string&#39; || typeof pizzas !== &#39;string&#39; || typeof pieces !== &#39;string&#39;) {
+    throw new Error(&#39;arguments to this function must be provided as strings&#39;)
+  }
+
+  if (!Number.isInteger(parseFloat(people)) ||
+    !Number.isInteger(parseFloat(pizzas)) ||
+    !Number.isInteger(parseFloat(pieces))) {
+    throw new Error(&#39;arguments must be parseable integer digits&#39;)
+  }
+
+  const total_pieces = pizzas * pieces
+  const pieces_remain = total_pieces % people
+  if (pieces_remain === 1) {
+    return `There is ${pieces_remain} leftover piece.`
+  }
+  return `There are ${pieces_remain} leftover pieces.`
+}
+
+function piecesPerPerson(people, pizzas, pieces) {
+  if (typeof people !== &#39;string&#39; || typeof pizzas !== &#39;string&#39; || typeof pieces !== &#39;string&#39;) {
+    throw new Error(&#39;arguments to this function must be provided as strings&#39;)
+  }
+
+  if (!Number.isInteger(parseFloat(people)) ||
+    !Number.isInteger(parseFloat(pizzas)) ||
+    !Number.isInteger(parseFloat(pieces))) {
+    throw new Error(&#39;arguments must be parseable integer digits&#39;)
+  }
+
+  const total_pieces = pizzas * pieces
+  const pieces_each = Math.floor(total_pieces / people)
+  return `Each person gets ${pieces_each} pieces of pizza.`
+}
+
+function aboutTheParty(people, pizzas, pieces) {
+  if (typeof people !== &#39;string&#39; || typeof pizzas !== &#39;string&#39; || typeof pieces !== &#39;string&#39;) {
+    throw new Error(&#39;arguments to this function must be provided as strings&#39;)
+  }
+
+  if (!Number.isInteger(parseFloat(people)) ||
+    !Number.isInteger(parseFloat(pizzas)) ||
+    !Number.isInteger(parseFloat(pieces))) {
+    throw new Error(&#39;arguments must be parseable integer digits&#39;)
+  }
+
+  return `${people} ${pluralizer(&#39;people&#39;, people)} with ${pizzas} ${pluralizer(&#39;pizzas&#39;, pizzas)}, each pizza having ${pieces} ${pluralizer(&#39;pieces&#39;, pieces)}`
+}
+
+function pluralizer(type, val) {
+  const plurals = {
+    people: [&#39;person&#39;, &#39;people&#39;],
+    pizzas: [&#39;pizza&#39;, &#39;pizzas&#39;],
+    pieces: [&#39;piece&#39;, &#39;pieces&#39;],
+  }
+
+  if (!Object.keys(plurals).includes(type)) {
+    throw new Error(&#39;type must be one of [\&#39;person\&#39;, \&#39;pizzas\&#39;, \&#39;pieces\&#39;]&#39;)
+  }
+
+  if (typeof val !== &#39;string&#39; || !Number.isInteger(parseFloat(val))) {
+    throw new Error(&#39;val must be a parseable integer digit supplied as a string&#39;)
+  }
+
+  let lookup_val = val - 1
+  if (lookup_val &amp;gt; 1) lookup_val = 1
+  return plurals[type][lookup_val]
+}
+
+module.exports = {
+  remainingPieces,
+  piecesPerPerson,
+  aboutTheParty,
+  pluralizer,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;exercise-9-paint-calculator&#34;&gt;Exercise 9 - Paint Calculator&lt;/h1&gt;
+
+&lt;p&gt;This is another &amp;ldquo;area of a rectangle&amp;rdquo; calculator since it&amp;rsquo;s just focused on the
+ceiling of a room.
+It does impose some nice rounding requirements though.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/jeremy-j-ackso/exercises-for-programmers-nodejs/blob/master/ch3/paintCalc.js&#34; target=&#34;_blank&#34;&gt;Here&amp;rsquo;s the &lt;code&gt;readline&lt;/code&gt; function calling it.&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;function paintCalculator(length, width) {
+  if (!/^[0-9]+\.?[0-9]*$/.test(length) || typeof length !== &#39;string&#39;) {
+    throw new Error(&#39;length must be a parseable number provided as a string&#39;)
+  }
+
+  if (!/^[0-9]+\.?[0-9]*$/.test(width) || typeof width !== &#39;string&#39;) {
+    throw new Error(&#39;width must be a parseable number provided as a string&#39;)
+  }
+
+  const galPerSqFt = 1 / 350
+  const sqft_num = dimensions_paint(length, width)
+
+  return Math.ceil(sqft_num * galPerSqFt)
+}
+
+function dimensions_paint(length, width) {
+  if (!/^[0-9]+\.?[0-9]*$/.test(length) || typeof length !== &#39;string&#39;) {
+    throw new Error(&#39;length must be a parseable number provided as a string&#39;)
+  }
+
+  if (!/^[0-9]+\.?[0-9]*$/.test(width) || typeof width !== &#39;string&#39;) {
+    throw new Error(&#39;width must be a parseable number provided as a string&#39;)
+  }
+
+  const length_num = parseFloat(length)
+  const width_num = parseFloat(width)
+  return length_num * width_num
+}
+
+module.exports = {
+  paintCalculator,
+  dimensions_paint,
+}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
     
     <item>
       <title>Exercises for Programmers 2 - NODEJS</title>

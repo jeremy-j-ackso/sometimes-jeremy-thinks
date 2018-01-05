@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.31.1" />
+  <meta name="author" content="Jeremy Jackson">
+  <meta name="description" content="Software Engineering and Data Science">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://ackso.net/project/exercises-for-programmers-3/">
+
+  
+  
+
+
+  
+
+  
+  
+  
+  
+    
+  
+  
+    
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+    
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  
+  
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+
+  
+  <link rel="alternate" href="https://ackso.net/index.xml" type="application/rss+xml" title="Sometimes Jeremy Thinks">
+  <link rel="feed" href="https://ackso.net/index.xml" type="application/rss+xml" title="Sometimes Jeremy Thinks">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://ackso.net/project/exercises-for-programmers-3/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@jeremy_j_ackso">
+  <meta property="twitter:creator" content="@jeremy_j_ackso">
+  
+  <meta property="og:site_name" content="Sometimes Jeremy Thinks">
+  <meta property="og:url" content="https://ackso.net/project/exercises-for-programmers-3/">
+  <meta property="og:title" content="Exercises for Programmers 3 - NODEJS | Sometimes Jeremy Thinks">
+  <meta property="og:description" content="">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2018-01-04T21:41:19-07:00">
+  
+  <meta property="article:modified_time" content="2018-01-04T21:41:19-07:00">
+  
+
+  
+
+  <title>Exercises for Programmers 3 - NODEJS | Sometimes Jeremy Thinks</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">Sometimes Jeremy Thinks</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#projects">
+            
+            <span>Projects</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article article-project" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+
+    <div class="pub-title">
+      <h1 itemprop="name">Exercises for Programmers 3 - NODEJS</h1>
+      <span class="pub-authors" itemprop="author">&nbsp;</span>
+      <span class="pull-right">
+        
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Exercises%20for%20Programmers%203%20-%20NODEJS&amp;url=https%3a%2f%2fackso.net%2fproject%2fexercises-for-programmers-3%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fackso.net%2fproject%2fexercises-for-programmers-3%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fackso.net%2fproject%2fexercises-for-programmers-3%2f&amp;title=Exercises%20for%20Programmers%203%20-%20NODEJS"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=https%3a%2f%2fackso.net%2fproject%2fexercises-for-programmers-3%2f&amp;title=Exercises%20for%20Programmers%203%20-%20NODEJS"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Exercises%20for%20Programmers%203%20-%20NODEJS&amp;body=https%3a%2f%2fackso.net%2fproject%2fexercises-for-programmers-3%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+      </span>
+    </div>
+
+    
+
+    <div class="article-style" itemprop="articleBody">
+      
+
+<p>I&rsquo;m in the midst of working through Chapter 3 of
+<a href="https://pragprog.com/book/bhwb/exercises-for-programmers" target="_blank">Exercises for Programmers</a>
+and decided to write an update on my progress because some of these
+individual exercises are starting to get a bit long and convoluted,
+so I feel like some of them might benefit from being stand-alone posts.
+That will certainly be true for Exercise 10, which I finished up last
+night, so for this post I&rsquo;m just going to talk about Exercises 7-9.</p>
+
+<p>Also, <a href="https://github.com/jeremy-j-ackso/exercises-for-programmers-nodejs" target="_blank">here&rsquo;s my Github repo for this project.</a></p>
+
+<h2>Table of Contents</h2>
+<nav id="TableOfContents">
+<ul>
+<li><a href="#background">Background</a></li>
+<li><a href="#exercise-7-area-of-a-rectangular-room">Exercise 7 - Area of a Rectangular Room</a></li>
+<li><a href="#exercise-8-pizza-party">Exercise 8 - Pizza Party</a></li>
+<li><a href="#exercise-9-paint-calculator">Exercise 9 - Paint Calculator</a></li>
+</ul>
+</nav>
+
+
+<h1 id="background">Background</h1>
+
+<p>This chapter is all about calculations.
+All of the exercises have you taking some input, doing some calculations,
+and then writing the output.
+As you might expect you end up getting cozy with your basic 4 functions,
+<code>Math</code> and <code>Number</code> methods like rounding and defining decimal precision, and validating
+that user inputs are parseable digits.
+The complexity that is getting introduced in this chapter also really
+forces the issue of making sure that you break out your functionality
+into smaller component functions, and you can find some rewarding opportunities
+for using arguments to slightly modify your function outputs, for instance
+when you&rsquo;re converting between imperial and metric units.</p>
+
+<p>As you might expect, with more component functions comes more tests.
+Like I mentioned, last night I got through Exercise 10, and already my test file
+for this chapter is around 750 lines long.
+I have three more exercises to go for this chapter, so I&rsquo;m figuring it will grow
+to be over 1000 lines before this chapter ends.
+That being the case, I&rsquo;m not going to post my tests in here because they&rsquo;re
+getting to be rather boilerplate-y and I personally wouldn&rsquo;t be interested in scrolling
+for ages through similar-looking mocha tests.
+However you can definitely go check the tests out
+<a href="https://github.com/jeremy-j-ackso/exercises-for-programmers-nodejs/blob/master/test/ch3.test.js" target="_blank">here</a>.</p>
+
+<p>My scripts that are implementing the <code>readline</code> functionality for each of the exercises
+are also pretty standard for the three exercises here, so I&rsquo;ll just be linking back to
+those on Github rather than showing them here.</p>
+
+<p>The most interesting thing I learned from doing these exercises is that JavaScript
+parses <a href="https://semver.org/" target="_blank">semantic versioning numbers</a> as Floats (or Integers)
+of the Major version, the first dot as the decimal point, and the Minor version.
+It ignores the second dot and the Patch version.
+This means that:</p>
+
+<pre><code>parseFloat('1.2.3') // returns 1.2
+</code></pre>
+
+<p>I had to write tests for this and that also inspired some of my later usage of regular
+expressions to validate proper numeric input provided as strings.
+That&rsquo;s also something I&rsquo;m going to have to refactor for if I ever go back and do that.
+The only reason I discovered this is that when I was writing up my tests I realized
+that it should cause the functions to throw an error and I had no idea if it would
+or not.</p>
+
+<p>This was just something that popped into my head and I&rsquo;m glad I wrote that test because
+JavaScript is perfectly happy to pretend that these are numbers and will do its
+best to accomodate them as such.</p>
+
+<p>I also tested this in Python and R, and both of them generated errors when attempting
+to convert the semver string to some type of numeric, which is what I would have
+expected from JavaScript as well.</p>
+
+<h1 id="exercise-7-area-of-a-rectangular-room">Exercise 7 - Area of a Rectangular Room</h1>
+
+<p>The most fancy thing here is the use of the <code>*=</code> infix operator to convert
+from imperial to metric in the case that the <code>units</code> required is metric.</p>
+
+<p><a href="https://github.com/jeremy-j-ackso/exercises-for-programmers-nodejs/blob/master/ch3/area-of-rectangle-room.js" target="_blank">Here&rsquo;s the <code>readline</code> function calling it.</a></p>
+
+<pre><code class="language-javascript">/* eslint comma-dangle: &quot;off&quot;, comma-spacing: &quot;off&quot; */
+
+function sqft(length, width) {
+  const invalids = [null, undefined,]
+  if (invalids.includes(length) || invalids.includes(width)) {
+    throw new Error('inputs must not be null or undefined')
+  }
+
+  if (!parseFloat(length) || !parseFloat(width)) {
+    throw new Error('length and width must be digits')
+  }
+
+  return `${areaOfRectangle(length, width, 'feet')} square feet`
+}
+
+function sqmeters(length, width) {
+  const invalids = [null, undefined,]
+  if (invalids.includes(length) || invalids.includes(width)) {
+    throw new Error('inputs must not be null or undefined')
+  }
+
+  if (!parseFloat(length) || !parseFloat(width)) {
+    throw new Error('length and width must be digits')
+  }
+
+  return `${areaOfRectangle(length, width, 'meters')} square meters`
+}
+
+function dimensions(length, width) {
+  const invalids = [null, undefined,]
+  if (invalids.includes(length) || invalids.includes(width)) {
+    throw new Error('inputs must not be null or undefined')
+  }
+
+  if (!parseFloat(length) || !parseFloat(width)) {
+    throw new Error('length and width must be digits')
+  }
+
+  return `You entered dimensions of ${length} feet by ${width} feet.`
+}
+
+function areaOfRectangle(length, width, unit) {
+  const invalids = [null, undefined,]
+  if (invalids.includes(length) || invalids.includes(width) || invalids.includes(unit)) {
+    throw new Error('inputs must not be null or undefined')
+  }
+
+  if (!['feet', 'meters'].includes(unit)) {
+    throw new Error('units must be either \'feet\' or \'meters\'')
+  }
+
+  if (!parseFloat(length) || !parseFloat(width)) {
+    throw new Error('length and width must be digits')
+  }
+
+  let area = length * width
+  if (unit === 'meters') area *= 0.09290304
+  return area.toFixed(3)
+}
+
+module.exports = {
+  dimensions,
+  sqft,
+  sqmeters,
+  areaOfRectangle,
+}
+</code></pre>
+
+<h1 id="exercise-8-pizza-party">Exercise 8 - Pizza Party</h1>
+
+<p>This one has you doing both integer division and grabbing remainders!
+I also like that I had to write the <code>pluralizer()</code> function to correctly
+decide what word to use based on the number values.
+Also, <code>aboutTheParty()</code> has some extreme string templating going on.</p>
+
+<p><a href="https://github.com/jeremy-j-ackso/exercises-for-programmers-nodejs/blob/master/ch3/pizza-party.js" target="_blank">Here&rsquo;s the <code>readline</code> function calling it.</a></p>
+
+<pre><code class="language-javascript">function remainingPieces(people, pizzas, pieces) {
+  if (typeof people !== 'string' || typeof pizzas !== 'string' || typeof pieces !== 'string') {
+    throw new Error('arguments to this function must be provided as strings')
+  }
+
+  if (!Number.isInteger(parseFloat(people)) ||
+    !Number.isInteger(parseFloat(pizzas)) ||
+    !Number.isInteger(parseFloat(pieces))) {
+    throw new Error('arguments must be parseable integer digits')
+  }
+
+  const total_pieces = pizzas * pieces
+  const pieces_remain = total_pieces % people
+  if (pieces_remain === 1) {
+    return `There is ${pieces_remain} leftover piece.`
+  }
+  return `There are ${pieces_remain} leftover pieces.`
+}
+
+function piecesPerPerson(people, pizzas, pieces) {
+  if (typeof people !== 'string' || typeof pizzas !== 'string' || typeof pieces !== 'string') {
+    throw new Error('arguments to this function must be provided as strings')
+  }
+
+  if (!Number.isInteger(parseFloat(people)) ||
+    !Number.isInteger(parseFloat(pizzas)) ||
+    !Number.isInteger(parseFloat(pieces))) {
+    throw new Error('arguments must be parseable integer digits')
+  }
+
+  const total_pieces = pizzas * pieces
+  const pieces_each = Math.floor(total_pieces / people)
+  return `Each person gets ${pieces_each} pieces of pizza.`
+}
+
+function aboutTheParty(people, pizzas, pieces) {
+  if (typeof people !== 'string' || typeof pizzas !== 'string' || typeof pieces !== 'string') {
+    throw new Error('arguments to this function must be provided as strings')
+  }
+
+  if (!Number.isInteger(parseFloat(people)) ||
+    !Number.isInteger(parseFloat(pizzas)) ||
+    !Number.isInteger(parseFloat(pieces))) {
+    throw new Error('arguments must be parseable integer digits')
+  }
+
+  return `${people} ${pluralizer('people', people)} with ${pizzas} ${pluralizer('pizzas', pizzas)}, each pizza having ${pieces} ${pluralizer('pieces', pieces)}`
+}
+
+function pluralizer(type, val) {
+  const plurals = {
+    people: ['person', 'people'],
+    pizzas: ['pizza', 'pizzas'],
+    pieces: ['piece', 'pieces'],
+  }
+
+  if (!Object.keys(plurals).includes(type)) {
+    throw new Error('type must be one of [\'person\', \'pizzas\', \'pieces\']')
+  }
+
+  if (typeof val !== 'string' || !Number.isInteger(parseFloat(val))) {
+    throw new Error('val must be a parseable integer digit supplied as a string')
+  }
+
+  let lookup_val = val - 1
+  if (lookup_val &gt; 1) lookup_val = 1
+  return plurals[type][lookup_val]
+}
+
+module.exports = {
+  remainingPieces,
+  piecesPerPerson,
+  aboutTheParty,
+  pluralizer,
+}
+</code></pre>
+
+<h1 id="exercise-9-paint-calculator">Exercise 9 - Paint Calculator</h1>
+
+<p>This is another &ldquo;area of a rectangle&rdquo; calculator since it&rsquo;s just focused on the
+ceiling of a room.
+It does impose some nice rounding requirements though.</p>
+
+<p><a href="https://github.com/jeremy-j-ackso/exercises-for-programmers-nodejs/blob/master/ch3/paintCalc.js" target="_blank">Here&rsquo;s the <code>readline</code> function calling it.</a></p>
+
+<pre><code class="language-javascript">function paintCalculator(length, width) {
+  if (!/^[0-9]+\.?[0-9]*$/.test(length) || typeof length !== 'string') {
+    throw new Error('length must be a parseable number provided as a string')
+  }
+
+  if (!/^[0-9]+\.?[0-9]*$/.test(width) || typeof width !== 'string') {
+    throw new Error('width must be a parseable number provided as a string')
+  }
+
+  const galPerSqFt = 1 / 350
+  const sqft_num = dimensions_paint(length, width)
+
+  return Math.ceil(sqft_num * galPerSqFt)
+}
+
+function dimensions_paint(length, width) {
+  if (!/^[0-9]+\.?[0-9]*$/.test(length) || typeof length !== 'string') {
+    throw new Error('length must be a parseable number provided as a string')
+  }
+
+  if (!/^[0-9]+\.?[0-9]*$/.test(width) || typeof width !== 'string') {
+    throw new Error('width must be a parseable number provided as a string')
+  }
+
+  const length_num = parseFloat(length)
+  const width_num = parseFloat(width)
+  return length_num * width_num
+}
+
+module.exports = {
+  paintCalculator,
+  dimensions_paint,
+}
+</code></pre>
+
+    </div>
+
+    
+
+
+<div class="article-tags">
+  
+  <a class="btn btn-primary btn-outline" href="/tags/programming-exercises">programming exercises</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/nodejs">nodejs</a>
+  
+</div>
+
+
+
+
+    
+    
+    
+
+    
+      
+      
+      
+      
+
+      
+      
+      
+      
+    
+
+  </div>
+</article>
+
+<div class="container">
+  <nav>
+  <ul class="pager">
+    
+    <li class="previous"><a href="https://ackso.net/project/exercises-for-programmers-2/"><span
+      aria-hidden="true">&larr;</span> Exercises for Programmers 2 - NODEJS</a></li>
+    
+
+    
+  </ul>
+</nav>
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2017 Jeremy T Jackson &middot; 
+
+      Powered by the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+    <script id="dsq-count-scr" src="//ackso-net.disqus.com.disqus.com/count.js" async></script>
+    
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+    
+    
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+      
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
+
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/python.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/bash.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/css.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/diff.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/javascript.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/json.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/markdown.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/nginx.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/processing.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/sql.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/tex.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/vim.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML" integrity="sha512-tOav5w1OjvsSJzePRtt2uQPFwBoHt1VZcUq8l8nm5284LEKE9FSJBQryzMBzHxY5P0zRdNqEcpLIRVYFNgu1jw==" crossorigin="anonymous"></script>
+    
+    
+
+  </body>
+</html>
+
