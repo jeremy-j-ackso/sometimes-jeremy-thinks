@@ -11,6 +11,288 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Exercises for Programmers 4 - NODEJ</title>
+      <link>https://ackso.net/project/exercises-for-programmers-4/</link>
+      <pubDate>Fri, 05 Jan 2018 21:14:35 -0700</pubDate>
+      
+      <guid>https://ackso.net/project/exercises-for-programmers-4/</guid>
+      <description>
+
+&lt;p&gt;As I mentioned in the previous post, chapter 3 is getting a bit more complex.
+I&amp;rsquo;m through Exercise 10, and that one ended up being pretty complex.
+I ended up breaking out the functionality as lowly as I reasonably could
+just to help control the complexity.
+Part of the outcome of that is that I also had to write waaay more tests.
+I&amp;rsquo;m right around 750 lines in my chapter 3 test file, and around 225 of those
+lines are just for this one exercise.&lt;/p&gt;
+
+&lt;h2&gt;Table of Contents&lt;/h2&gt;
+&lt;nav id=&#34;TableOfContents&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#working-up-the-functions-and-tests&#34;&gt;Working up the functions and tests&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#dealing-with-user-input-and-eliminating-callback-hell&#34;&gt;Dealing with user input and eliminating callback hell&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#things-i-would-change-for-the-future&#34;&gt;Things I would change for the future&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#self-checkout-readline&#34;&gt;Self Checkout &lt;code&gt;readline&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#self-checkout-fuctions&#34;&gt;Self Checkout Fuctions&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/nav&gt;
+
+
+&lt;h1 id=&#34;working-up-the-functions-and-tests&#34;&gt;Working up the functions and tests&lt;/h1&gt;
+
+&lt;p&gt;I ended up writing 7 functions for this exercise just to produce outputs,
+most of which are fairly short and highly specific to their purpose.
+For instance, rather than calculating a subtotal for an item as &lt;code&gt;price * quantity&lt;/code&gt;
+I converted it into a function call that does the math, but also takes care
+of decimal precision.
+Doing this for as many feature aspects as possible helped me keep my main
+function that produces the final output fairly clean.
+It also increased testability of each component piece so that I could
+more easily test for edge cases.
+So even though I ended up writing more tests and test cases, reasoning
+about the tests and what the functions were supposed to do became &lt;strong&gt;much,
+MUCH&lt;/strong&gt; easier.&lt;/p&gt;
+
+&lt;p&gt;I also decided to break out some additional pieces of functionality that I
+could see a lot of people leaving in the main function. One is responsibile for
+deciding if a user input is valid.
+It performs several tests to either throw one of three errors or return &lt;code&gt;true&lt;/code&gt;.
+Breaking this out and calling it as part of the main function let me keep
+my &lt;code&gt;readline&lt;/code&gt; functions a bit cleaner and also minimized the complexity of
+generating errors from bad inputs.&lt;/p&gt;
+
+&lt;p&gt;The other function that others might have left in is responsible for building
+the output string.
+It takes numeric values calculated by other functions, sticks them in an array
+of template strings, and then returns those strings joined together with
+newline &lt;code&gt;\n&lt;/code&gt; characters.&lt;/p&gt;
+
+&lt;h1 id=&#34;dealing-with-user-input-and-eliminating-callback-hell&#34;&gt;Dealing with user input and eliminating callback hell&lt;/h1&gt;
+
+&lt;p&gt;The last big takeaway I got from working through this exercise was in dealing
+with user interaction via &lt;code&gt;readline&lt;/code&gt;.
+I had mentioned in one of the earlier Exercises for Programmers posts that
+I was seeing a very strong possibilty of having to deal with callback hell
+in working with &lt;code&gt;readline.question()&lt;/code&gt;.
+That hell almost became realized in working on this exercise.
+The author has you asking two questions for each of three items: &amp;ldquo;What&amp;rsquo;s the
+price?&amp;rdquo; and &amp;ldquo;What&amp;rsquo;s the quantity?&amp;rdquo;
+This is an obvious situation where code re-use shows some benefits as well.
+So between code re-use and the threat of callback hell I decided to pay
+special attention to how this would interact with users and how I could
+streamline and simplify my &lt;code&gt;readline&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;I considered several different possible courses of action, noting that
+&lt;code&gt;readline&lt;/code&gt; produces Streams, but after doing some reading into Streams,
+Promises, and Generators (the three most likely places a solution for this
+would come from) I settled on Promises as the correct way to handle this.
+Since I have two questions, I wrote two functions that each returns
+a &lt;code&gt;new Promise()&lt;/code&gt; to ask them.
+Since Promises can be chained together using the &lt;code&gt;then()&lt;/code&gt; method, and the
+output of each link in the chain is passed to the next &lt;code&gt;then()&lt;/code&gt; call I
+conveniently end up with a nice way to build up an Object piece by piece
+that can ultimately be passed into my main funciton that I&amp;rsquo;ve already written.&lt;/p&gt;
+
+&lt;p&gt;Each question also has to mention which &amp;ldquo;item number&amp;rdquo; it&amp;rsquo;s asking about.
+Since the book&amp;rsquo;s requirements specify that we&amp;rsquo;re only concerned about 3
+items, and not a potentially infinite number, I decided that the most prudent
+thing to do would be to explicitly chain all 6 questions together.
+It also became simpler to just make the &amp;ldquo;item number&amp;rdquo; an argument to
+the question functions.
+This saved me from having to write code that would analyze the Object
+passed into it in order to figure out what &amp;ldquo;item number&amp;rdquo; it would be
+asking about.&lt;/p&gt;
+
+&lt;h1 id=&#34;things-i-would-change-for-the-future&#34;&gt;Things I would change for the future&lt;/h1&gt;
+
+&lt;p&gt;I think that how I&amp;rsquo;m dealing with the &lt;code&gt;readline&lt;/code&gt; functionality is really
+good, but it could definitely be improved.
+I currently don&amp;rsquo;t have anything going on with the &lt;code&gt;reject&lt;/code&gt; statements
+in the Promises, mostly because I haven&amp;rsquo;t given much thought about what
+it would mean for possible future user input to be rejected.
+In this case it may not be necessary.&lt;/p&gt;
+
+&lt;p&gt;I could also do more to clean up the input validation and error generation.
+For instance, moving the input validation closer to the &lt;code&gt;readline&lt;/code&gt;
+statements would help in generating and recovering from errors earlier.
+Currently it only has the possibility of generating errors after it has
+already collected all of the information from the user.
+I&amp;rsquo;d like to throw the error sooner and also create a way to recover from
+those errors and re-ask an errored question with some guidance to the
+user about valid inputs.&lt;/p&gt;
+
+&lt;p&gt;Lastly, &lt;code&gt;selfCheckout()&lt;/code&gt; has some ugly spots.
+It works, but I wouldn&amp;rsquo;t call it the most well-written and clear function
+I&amp;rsquo;ve ever written.
+It could use a re-write, which could eventually turn into some of the
+functionality built into it being pushed out to other functions.&lt;/p&gt;
+
+&lt;h1 id=&#34;self-checkout-readline&#34;&gt;Self Checkout &lt;code&gt;readline&lt;/code&gt;&lt;/h1&gt;
+
+&lt;p&gt;So here&amp;rsquo;s my &lt;code&gt;readline&lt;/code&gt; module that is implemented with Promises so
+that we get that nice chaining to forward the data on to subsequent
+questions.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;#!/usr/bin/node
+
+const readline = require(&#39;readline&#39;)
+const { selfCheckout } = require(&#39;./ex10.js&#39;)
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+})
+
+enterPrice({}, 1)
+  .then(passedData =&amp;gt; enterQty(passedData, 1))
+  .then(passedData =&amp;gt; enterPrice(passedData, 2))
+  .then(passedData =&amp;gt; enterQty(passedData, 2))
+  .then(passedData =&amp;gt; enterPrice(passedData, 3))
+  .then(passedData =&amp;gt; enterQty(passedData, 3))
+  .then((passedData) =&amp;gt; {
+    const output = selfCheckout(passedData)
+    console.log(output)
+    rl.close()
+  })
+
+function enterPrice(passedData, itemNumber) {
+  return new Promise((resolve, reject) =&amp;gt; {
+    rl.question(`Enter the price of item ${itemNumber}: `, (price) =&amp;gt; {
+      passedData[`item${itemNumber}`] = { price }
+      resolve(passedData)
+      reject()
+    })
+  })
+}
+
+function enterQty(passedData, itemNumber) {
+  return new Promise((resolve, reject) =&amp;gt; {
+    rl.question(`Enter the quantity of item ${itemNumber}: `, (qty) =&amp;gt; {
+      passedData[`item${itemNumber}`].qty = qty
+      resolve(passedData)
+      reject()
+    })
+  })
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;self-checkout-fuctions&#34;&gt;Self Checkout Fuctions&lt;/h1&gt;
+
+&lt;p&gt;Here&amp;rsquo;s all of the functions that do the calculations, validate inputs,
+and generate outputs.
+&lt;code&gt;selfCheckout()&lt;/code&gt; is the function that brings all of them together and
+gets called at the end of the &lt;code&gt;readline&lt;/code&gt; Promise chain.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;function itemSubtotal(price, qty) {
+  const output = price * qty
+  const output_fixed = output.toFixed(2)
+  return output_fixed
+}
+
+function billSubtotal(subtotals) {
+  const output = subtotals.reduce((arr, cv) =&amp;gt; {
+    arr += cv
+    return arr
+  }, 0)
+  const output_fixed = output.toFixed(2)
+  return output_fixed
+}
+
+function tax(subtotal) {
+  const taxrate = 0.055
+  const output = subtotal * taxrate
+  const output_fixed = output.toFixed(2)
+  return output_fixed
+}
+
+function total(subtotal, tax_val) {
+  const output = subtotal + tax_val
+  const output_fixed = output.toFixed(2)
+  return output_fixed
+}
+
+function isStringedNumber(input, type) {
+  if (![&#39;money&#39;, &#39;quantity&#39;].includes(type)) {
+    throw new Error(&#39;type must be one of [\&#39;money\&#39;, \&#39;quantity\&#39;]&#39;)
+  }
+
+  if ((type === &#39;money&#39; &amp;amp;&amp;amp; !/^[0-9]+(\.[0-9]{2})?$/.test(input)) || typeof input !== &#39;string&#39;) {
+    throw new Error(&#39;price must be a string digit, either as an integer, or with two decimal places&#39;)
+  }
+
+  if ((type === &#39;quantity&#39; &amp;amp;&amp;amp; !/^[0-9]+$/.test(input)) || typeof input !== &#39;string&#39;) {
+    throw new Error(&#39;quantity must be a string integer&#39;)
+  }
+
+  return true
+}
+
+function outputBuilder(subtotal, tax_val, total_val) {
+  const output = [
+    `Subtotal: $${subtotal}`,
+    `Tax: $${tax_val}`,
+    `Total: $${total_val}`,
+  ]
+
+  return output.join(&#39;\n&#39;)
+}
+
+function selfCheckout(input) {
+  const input_keys = Object.keys(input)
+  input_keys.forEach((key) =&amp;gt; {
+    if (![&#39;item1&#39;, &#39;item2&#39;, &#39;item3&#39;].includes(key)) {
+      throw new Error(&#39;input must be an object with three properties such that Object.keys(input) === [\&#39;item1\&#39;, \&#39;item2\&#39;, \&#39;item3\&#39;]&#39;)
+    }
+  })
+  if (!input_keys.includes(&#39;item1&#39;) || !input_keys.includes(&#39;item2&#39;) || !input_keys.includes(&#39;item3&#39;)) {
+    throw new Error(&#39;input must be an object with three properties such that Object.keys(input) === [\&#39;item1\&#39;, \&#39;item2\&#39;, \&#39;item3\&#39;]&#39;)
+  }
+
+  const input_vals = Object.values(input)
+  input_vals.forEach((val) =&amp;gt; {
+    const val_keys = Object.keys(val)
+    val_keys.forEach((key) =&amp;gt; {
+      if (![&#39;price&#39;, &#39;qty&#39;].includes(key)) {
+        throw new Error(&#39;each item must have a price and qty and no other properties&#39;)
+      }
+    })
+    if (!val_keys.includes(&#39;price&#39;) || !val_keys.includes(&#39;qty&#39;)) {
+      throw new Error(&#39;each item must have a price and qty and no other properties&#39;)
+    }
+
+    isStringedNumber(val.price, &#39;money&#39;)
+    isStringedNumber(val.qty, &#39;quantity&#39;)
+  })
+
+  const subtotals = [
+    parseFloat(itemSubtotal(parseFloat(input.item1.price), parseFloat(input.item1.qty))),
+    parseFloat(itemSubtotal(parseFloat(input.item2.price), parseFloat(input.item2.qty))),
+    parseFloat(itemSubtotal(parseFloat(input.item3.price), parseFloat(input.item3.qty))),
+  ]
+
+  const billSub = billSubtotal(subtotals)
+  const taxes = tax(parseFloat(billSub))
+  const billTotal = total(parseFloat(billSub), parseFloat(taxes))
+
+  const output = outputBuilder(billSub, taxes, billTotal)
+
+  return output
+}
+
+module.exports = {
+  selfCheckout,
+  itemSubtotal,
+  billSubtotal,
+  tax,
+  total,
+  isStringedNumber,
+  outputBuilder,
+}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Exercises for Programmers 3 - NODEJS</title>
       <link>https://ackso.net/project/exercises-for-programmers-3/</link>
       <pubDate>Thu, 04 Jan 2018 21:41:19 -0700</pubDate>
