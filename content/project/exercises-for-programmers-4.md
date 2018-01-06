@@ -1,5 +1,5 @@
 ---
-title: "Exercises for Programmers 4 - NODEJ"
+title: "Exercises for Programmers 4 - NODEJS"
 date: 2018-01-05T21:14:35-07:00
 draft: false
 tags: ["programming exercises", "nodejs"]
