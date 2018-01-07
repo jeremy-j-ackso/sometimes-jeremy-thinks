@@ -7,8 +7,172 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2017 Jeremy T Jackson</copyright>
-    <lastBuildDate>Fri, 05 Jan 2018 21:14:35 -0700</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jan 2018 15:48:48 -0700</lastBuildDate>
     <atom:link href="/project/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Refactoring Mock Couch</title>
+      <link>https://ackso.net/project/refactoring-mock-couch/</link>
+      <pubDate>Sat, 06 Jan 2018 15:48:48 -0700</pubDate>
+      
+      <guid>https://ackso.net/project/refactoring-mock-couch/</guid>
+      <description>
+
+&lt;p&gt;So I&amp;rsquo;m working on a boilerplate and website that relies on an
+&lt;a href=&#34;https://couchdb.apache.org&#34; target=&#34;_blank&#34;&gt;Apache CouchDB&lt;/a&gt;
+database.
+The site boilerplate, site, and database all work pretty well, but I want to use
+some CI/CD tools to run testing.&lt;/p&gt;
+
+&lt;p&gt;I have a couple of options open to me such as using configuration management to set
+up the whole environment, using Docker for key pieces of the environment, or finding
+some libraries that mock some of my required components, like CouchDB.
+After looking into what I would have to learn in order to implement each of them, I
+ended up deciding that for the near-term just going with mocking libraries would be
+the easiest.&lt;/p&gt;
+
+&lt;h2&gt;Table of Contents&lt;/h2&gt;
+&lt;nav id=&#34;TableOfContents&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#why-refactor-this-where-did-this-idea-come-from&#34;&gt;Why refactor this? Where did this idea come from?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#error-analysis&#34;&gt;Error Analysis&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#why-not-stop-if-somebody-already-made-a-pull-request-for-your-problem&#34;&gt;Why not stop if somebody already made a Pull Request for your problem?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#abuse-of-ramda-compose&#34;&gt;Abuse of &lt;code&gt;ramda.Compose()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#package-linting&#34;&gt;Package Linting&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#things-that-i-m-leaving-alone-for-now&#34;&gt;Things that I&amp;rsquo;m leaving alone&amp;hellip; for now.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#working-on-the-code&#34;&gt;Working on the code&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#working-on-the-tests&#34;&gt;Working on the tests&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#running-the-tests&#34;&gt;Running the tests&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#wrapping-up&#34;&gt;Wrapping up&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/nav&gt;
+
+
+&lt;h1 id=&#34;why-refactor-this-where-did-this-idea-come-from&#34;&gt;Why refactor this? Where did this idea come from?&lt;/h1&gt;
+
+&lt;p&gt;Since the site is using &lt;a href=&#34;https://redis.io&#34; target=&#34;_blank&#34;&gt;Redis&lt;/a&gt; for the cookie store, we&amp;rsquo;re using
+the excellent &lt;a href=&#34;https://www.npmjs.com/package/redis-mock&#34; target=&#34;_blank&#34;&gt;redis-mock&lt;/a&gt; for that.
+Almost entirely based on the hilarious logo for it (not actually true), we quickly
+decided on &lt;a href=&#34;https://www.npmjs.com/package/mock-couch&#34; target=&#34;_blank&#34;&gt;mock-couch&lt;/a&gt; to mock our CouchDB.
+There was one problem though: the current version of mock-couch doesn&amp;rsquo;t run with NodeJS 8.x.&lt;/p&gt;
+
+&lt;p&gt;So I decided to refactor it in order to bring the packages up-to-date, hopefully
+get it working with current versions of NodeJS, and take advantage of newer
+language features.&lt;/p&gt;
+
+&lt;p&gt;I forked it a few months ago and have been working on it on-and-off
+&lt;a href=&#34;https://github.com/jeremy-j-ackso/mock-couch/tree/update-packages&#34; target=&#34;_blank&#34;&gt;here, under the &lt;code&gt;update-packages&lt;/code&gt; branch.&lt;/a&gt;
+After I&amp;rsquo;m done I&amp;rsquo;m going to submit it back to the original author to see if he&amp;rsquo;ll
+accept my PR for this.
+If he doesn&amp;rsquo;t we&amp;rsquo;ll see where this goes from there.
+Maybe I&amp;rsquo;ll continue development as a new package if the merge request is declined?&lt;/p&gt;
+
+&lt;h1 id=&#34;error-analysis&#34;&gt;Error Analysis&lt;/h1&gt;
+
+&lt;p&gt;When I was initally trying to use this package, it always immediately threw a bunch
+errors.
+I was able to trace the errors back and found an &lt;a href=&#34;https://github.com/chris-l/mock-couch/issues/53&#34; target=&#34;_blank&#34;&gt;open issue&lt;/a&gt;
+that was related.
+I think that it&amp;rsquo;s mostly being caused by an older version of &lt;a href=&#34;http://restify.com/&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;restify&lt;/code&gt;&lt;/a&gt; and the
+&lt;a href=&#34;https://www.npmjs.com/package/spdy&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;spdy&lt;/code&gt;&lt;/a&gt; package that it relies on.
+A subsequent commenter on that issue discovered that this problem is found only
+with NodeJS &amp;gt; 7.x, so that means my NodeJS 8.x project is impacted.
+So far, that commmenter&amp;rsquo;s pull request has not been merged in even though it&amp;rsquo;s a
+fairly minor change.&lt;/p&gt;
+
+&lt;h1 id=&#34;why-not-stop-if-somebody-already-made-a-pull-request-for-your-problem&#34;&gt;Why not stop if somebody already made a Pull Request for your problem?&lt;/h1&gt;
+
+&lt;p&gt;Because I think there are some other benefits to a deeper refactor in this case.&lt;/p&gt;
+
+&lt;p&gt;Case in point: the &lt;a href=&#34;http://ramdajs.com/&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;ramda&lt;/code&gt;&lt;/a&gt; package has evolved very much since the version this
+was written for and current versions of &lt;code&gt;ramda&lt;/code&gt; actually break this package.
+Sure, that older version works, but this package also has reliance on it in ways that don&amp;rsquo;t
+simplify the code, and in some cases make it more complex for developers unfamiliar
+with &lt;code&gt;ramda&lt;/code&gt;.
+In fact, I found that in many cases the vanilla JavaScript solution was easier to
+read and understand than the &lt;code&gt;ramda&lt;/code&gt; implementation.
+This holds most true for the uses of &lt;code&gt;ramda&lt;/code&gt;&amp;rsquo;s &lt;code&gt;Compose()&lt;/code&gt; function.&lt;/p&gt;
+
+&lt;h1 id=&#34;abuse-of-ramda-compose&#34;&gt;Abuse of &lt;code&gt;ramda.Compose()&lt;/code&gt;&lt;/h1&gt;
+
+&lt;p&gt;&lt;code&gt;ramda.Compose()&lt;/code&gt; lets you chain a bunch of function calls together, each one putting
+its outputs into the next one&amp;rsquo;s input.
+Except it&amp;rsquo;s inverted.
+Which isn&amp;rsquo;t intuitive &lt;strong&gt;at all!&lt;/strong&gt;
+You end up having to read UP the page in order to understand how the code block flows.&lt;/p&gt;
+
+&lt;p&gt;This might be acceptable if some very complex things were going on, but most of what
+was going on could easily be solved with plain &lt;code&gt;Array&lt;/code&gt; methods.&lt;/p&gt;
+
+&lt;h1 id=&#34;package-linting&#34;&gt;Package Linting&lt;/h1&gt;
+
+&lt;p&gt;The package as written uses &lt;code&gt;jslint&lt;/code&gt;, which is great.
+However I kind of prefer &lt;code&gt;eslint&lt;/code&gt; and (in my opinion) the better tooling and
+configuration that it comes with.
+So &lt;code&gt;jslint&lt;/code&gt; has been replaced with &lt;code&gt;eslint&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h1 id=&#34;things-that-i-m-leaving-alone-for-now&#34;&gt;Things that I&amp;rsquo;m leaving alone&amp;hellip; for now.&lt;/h1&gt;
+
+&lt;p&gt;For the moment, this is using &lt;code&gt;jasmine&lt;/code&gt; tests.
+I somewhat prefer &lt;code&gt;mocha&lt;/code&gt;, but I want to leave &lt;code&gt;jasmine&lt;/code&gt; in place at least until I&amp;rsquo;m
+once again passing all tests after the refactor.
+Maybe at that point I&amp;rsquo;ll replace it with &lt;code&gt;mocha&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;m also leaving &lt;code&gt;grunt&lt;/code&gt; in place as the task runner.
+It isn&amp;rsquo;t a very complex &lt;code&gt;gruntfile&lt;/code&gt; at this point, so it may ultimately not be needed.
+I could probably replace grunt with just &lt;code&gt;npm scripts&lt;/code&gt; with how simple they are.&lt;/p&gt;
+
+&lt;h1 id=&#34;working-on-the-code&#34;&gt;Working on the code&lt;/h1&gt;
+
+&lt;p&gt;Since I really wanted this to be totally up-to-date I started off by doing an
+&lt;code&gt;npm update&lt;/code&gt;.
+This updated all of the packages to their most current versions and this is where I
+discovered the breaking changes that more modern versions of &lt;code&gt;ramda&lt;/code&gt; introduce.
+I left everything in place as it was for the moment.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;eslint --fix&lt;/code&gt; did a ton of work in whipping all of this code into shape.
+After it&amp;rsquo;s initial pass to fix things that are pretty straightforward I then loaded
+everything in &lt;code&gt;/lib&lt;/code&gt; into my &lt;code&gt;vim&lt;/code&gt; buffers and started working through the remaining
+lint errors.&lt;/p&gt;
+
+&lt;p&gt;As I went along I also tried to update the broken &lt;code&gt;ramda&lt;/code&gt; code, but time after time
+I discovered that what was going on in the &lt;code&gt;ramda&lt;/code&gt; calls was pretty basic stuff that
+could quite easily be done using vanilla JavaScript, often with &lt;code&gt;Array&lt;/code&gt; methods.
+So after replacing a couple of &lt;code&gt;ramda&lt;/code&gt; calls with vanilla equivalents I did a quick
+peak at all of the other places using &lt;code&gt;ramda&lt;/code&gt; and discovered that pretty much all of
+them were trivial replacements, and there were only a couple of instances where I would
+have to go a bit beyond &amp;ldquo;trivial&amp;rdquo; to convert things to vanilla JS.
+So I came to the conclusion that &lt;code&gt;ramda&lt;/code&gt; wasn&amp;rsquo;t really needed and removed it from
+the package dependencies.&lt;/p&gt;
+
+&lt;p&gt;With that out of the way I continued working through all of the buffered files, fixing
+linting errors and replacing now-defunct &lt;code&gt;ramda&lt;/code&gt; calls with vanilla JS.&lt;/p&gt;
+
+&lt;h1 id=&#34;working-on-the-tests&#34;&gt;Working on the tests&lt;/h1&gt;
+
+&lt;p&gt;Once again &lt;code&gt;eslint --fix&lt;/code&gt; was a lifesaver here.
+It fixed a bunch of formatting issues in the tests, and the remaining ones were pretty
+simple to deal with.
+Mostly things like using destructuring, having individual &lt;code&gt;let&lt;/code&gt; and &lt;code&gt;const&lt;/code&gt; assignments
+instead of chaining assignments with commas, implementing arrow functions for unnamed
+functions, stuff like that.&lt;/p&gt;
+
+&lt;h1 id=&#34;running-the-tests&#34;&gt;Running the tests&lt;/h1&gt;
+
+&lt;p&gt;This is where I&amp;rsquo;m at now.
+It isn&amp;rsquo;t as bad as I was thinking it would be.
+Roughly 50% of the tests are passing, which means that I probably just made some
+goofy errors in a couple of key places as I was converting away from &lt;code&gt;ramda&lt;/code&gt;.
+I&amp;rsquo;m about to get into that now.&lt;/p&gt;
+
+&lt;h1 id=&#34;wrapping-up&#34;&gt;Wrapping up&lt;/h1&gt;
+
+&lt;p&gt;Once I finish up getting all of the tests to pass I&amp;rsquo;ll update with a new post,
+sumbit the merge request and see where this goes after that.
+At the very least I&amp;rsquo;ll be able to make use of it for my purposes, so definitely looking
+forward to that.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Exercises for Programmers 4 - NODEJS</title>

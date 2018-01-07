@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.31.1" />
+  <meta name="author" content="Jeremy Jackson">
+  <meta name="description" content="Software Engineering and Data Science">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://ackso.net/project/refactoring-mock-couch/">
+
+  
+  
+
+
+  
+
+  
+  
+  
+  
+    
+  
+  
+    
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+    
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  
+  
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+
+  
+  <link rel="alternate" href="https://ackso.net/index.xml" type="application/rss+xml" title="Sometimes Jeremy Thinks">
+  <link rel="feed" href="https://ackso.net/index.xml" type="application/rss+xml" title="Sometimes Jeremy Thinks">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://ackso.net/project/refactoring-mock-couch/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@jeremy_j_ackso">
+  <meta property="twitter:creator" content="@jeremy_j_ackso">
+  
+  <meta property="og:site_name" content="Sometimes Jeremy Thinks">
+  <meta property="og:url" content="https://ackso.net/project/refactoring-mock-couch/">
+  <meta property="og:title" content="Refactoring Mock Couch | Sometimes Jeremy Thinks">
+  <meta property="og:description" content="">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2018-01-06T15:48:48-07:00">
+  
+  <meta property="article:modified_time" content="2018-01-06T15:48:48-07:00">
+  
+
+  
+
+  <title>Refactoring Mock Couch | Sometimes Jeremy Thinks</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">Sometimes Jeremy Thinks</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#projects">
+            
+            <span>Projects</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article article-project" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+
+    <div class="pub-title">
+      <h1 itemprop="name">Refactoring Mock Couch</h1>
+      <span class="pub-authors" itemprop="author">&nbsp;</span>
+      <span class="pull-right">
+        
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Refactoring%20Mock%20Couch&amp;url=https%3a%2f%2fackso.net%2fproject%2frefactoring-mock-couch%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fackso.net%2fproject%2frefactoring-mock-couch%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fackso.net%2fproject%2frefactoring-mock-couch%2f&amp;title=Refactoring%20Mock%20Couch"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=https%3a%2f%2fackso.net%2fproject%2frefactoring-mock-couch%2f&amp;title=Refactoring%20Mock%20Couch"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Refactoring%20Mock%20Couch&amp;body=https%3a%2f%2fackso.net%2fproject%2frefactoring-mock-couch%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+      </span>
+    </div>
+
+    
+
+    <div class="article-style" itemprop="articleBody">
+      
+
+<p>So I&rsquo;m working on a boilerplate and website that relies on an
+<a href="https://couchdb.apache.org" target="_blank">Apache CouchDB</a>
+database.
+The site boilerplate, site, and database all work pretty well, but I want to use
+some CI/CD tools to run testing.</p>
+
+<p>I have a couple of options open to me such as using configuration management to set
+up the whole environment, using Docker for key pieces of the environment, or finding
+some libraries that mock some of my required components, like CouchDB.
+After looking into what I would have to learn in order to implement each of them, I
+ended up deciding that for the near-term just going with mocking libraries would be
+the easiest.</p>
+
+<h2>Table of Contents</h2>
+<nav id="TableOfContents">
+<ul>
+<li><a href="#why-refactor-this-where-did-this-idea-come-from">Why refactor this? Where did this idea come from?</a></li>
+<li><a href="#error-analysis">Error Analysis</a></li>
+<li><a href="#why-not-stop-if-somebody-already-made-a-pull-request-for-your-problem">Why not stop if somebody already made a Pull Request for your problem?</a></li>
+<li><a href="#abuse-of-ramda-compose">Abuse of <code>ramda.Compose()</code></a></li>
+<li><a href="#package-linting">Package Linting</a></li>
+<li><a href="#things-that-i-m-leaving-alone-for-now">Things that I&rsquo;m leaving alone&hellip; for now.</a></li>
+<li><a href="#working-on-the-code">Working on the code</a></li>
+<li><a href="#working-on-the-tests">Working on the tests</a></li>
+<li><a href="#running-the-tests">Running the tests</a></li>
+<li><a href="#wrapping-up">Wrapping up</a></li>
+</ul>
+</nav>
+
+
+<h1 id="why-refactor-this-where-did-this-idea-come-from">Why refactor this? Where did this idea come from?</h1>
+
+<p>Since the site is using <a href="https://redis.io" target="_blank">Redis</a> for the cookie store, we&rsquo;re using
+the excellent <a href="https://www.npmjs.com/package/redis-mock" target="_blank">redis-mock</a> for that.
+Almost entirely based on the hilarious logo for it (not actually true), we quickly
+decided on <a href="https://www.npmjs.com/package/mock-couch" target="_blank">mock-couch</a> to mock our CouchDB.
+There was one problem though: the current version of mock-couch doesn&rsquo;t run with NodeJS 8.x.</p>
+
+<p>So I decided to refactor it in order to bring the packages up-to-date, hopefully
+get it working with current versions of NodeJS, and take advantage of newer
+language features.</p>
+
+<p>I forked it a few months ago and have been working on it on-and-off
+<a href="https://github.com/jeremy-j-ackso/mock-couch/tree/update-packages" target="_blank">here, under the <code>update-packages</code> branch.</a>
+After I&rsquo;m done I&rsquo;m going to submit it back to the original author to see if he&rsquo;ll
+accept my PR for this.
+If he doesn&rsquo;t we&rsquo;ll see where this goes from there.
+Maybe I&rsquo;ll continue development as a new package if the merge request is declined?</p>
+
+<h1 id="error-analysis">Error Analysis</h1>
+
+<p>When I was initally trying to use this package, it always immediately threw a bunch
+errors.
+I was able to trace the errors back and found an <a href="https://github.com/chris-l/mock-couch/issues/53" target="_blank">open issue</a>
+that was related.
+I think that it&rsquo;s mostly being caused by an older version of <a href="http://restify.com/" target="_blank"><code>restify</code></a> and the
+<a href="https://www.npmjs.com/package/spdy" target="_blank"><code>spdy</code></a> package that it relies on.
+A subsequent commenter on that issue discovered that this problem is found only
+with NodeJS &gt; 7.x, so that means my NodeJS 8.x project is impacted.
+So far, that commmenter&rsquo;s pull request has not been merged in even though it&rsquo;s a
+fairly minor change.</p>
+
+<h1 id="why-not-stop-if-somebody-already-made-a-pull-request-for-your-problem">Why not stop if somebody already made a Pull Request for your problem?</h1>
+
+<p>Because I think there are some other benefits to a deeper refactor in this case.</p>
+
+<p>Case in point: the <a href="http://ramdajs.com/" target="_blank"><code>ramda</code></a> package has evolved very much since the version this
+was written for and current versions of <code>ramda</code> actually break this package.
+Sure, that older version works, but this package also has reliance on it in ways that don&rsquo;t
+simplify the code, and in some cases make it more complex for developers unfamiliar
+with <code>ramda</code>.
+In fact, I found that in many cases the vanilla JavaScript solution was easier to
+read and understand than the <code>ramda</code> implementation.
+This holds most true for the uses of <code>ramda</code>&rsquo;s <code>Compose()</code> function.</p>
+
+<h1 id="abuse-of-ramda-compose">Abuse of <code>ramda.Compose()</code></h1>
+
+<p><code>ramda.Compose()</code> lets you chain a bunch of function calls together, each one putting
+its outputs into the next one&rsquo;s input.
+Except it&rsquo;s inverted.
+Which isn&rsquo;t intuitive <strong>at all!</strong>
+You end up having to read UP the page in order to understand how the code block flows.</p>
+
+<p>This might be acceptable if some very complex things were going on, but most of what
+was going on could easily be solved with plain <code>Array</code> methods.</p>
+
+<h1 id="package-linting">Package Linting</h1>
+
+<p>The package as written uses <code>jslint</code>, which is great.
+However I kind of prefer <code>eslint</code> and (in my opinion) the better tooling and
+configuration that it comes with.
+So <code>jslint</code> has been replaced with <code>eslint</code>.</p>
+
+<h1 id="things-that-i-m-leaving-alone-for-now">Things that I&rsquo;m leaving alone&hellip; for now.</h1>
+
+<p>For the moment, this is using <code>jasmine</code> tests.
+I somewhat prefer <code>mocha</code>, but I want to leave <code>jasmine</code> in place at least until I&rsquo;m
+once again passing all tests after the refactor.
+Maybe at that point I&rsquo;ll replace it with <code>mocha</code>.</p>
+
+<p>I&rsquo;m also leaving <code>grunt</code> in place as the task runner.
+It isn&rsquo;t a very complex <code>gruntfile</code> at this point, so it may ultimately not be needed.
+I could probably replace grunt with just <code>npm scripts</code> with how simple they are.</p>
+
+<h1 id="working-on-the-code">Working on the code</h1>
+
+<p>Since I really wanted this to be totally up-to-date I started off by doing an
+<code>npm update</code>.
+This updated all of the packages to their most current versions and this is where I
+discovered the breaking changes that more modern versions of <code>ramda</code> introduce.
+I left everything in place as it was for the moment.</p>
+
+<p><code>eslint --fix</code> did a ton of work in whipping all of this code into shape.
+After it&rsquo;s initial pass to fix things that are pretty straightforward I then loaded
+everything in <code>/lib</code> into my <code>vim</code> buffers and started working through the remaining
+lint errors.</p>
+
+<p>As I went along I also tried to update the broken <code>ramda</code> code, but time after time
+I discovered that what was going on in the <code>ramda</code> calls was pretty basic stuff that
+could quite easily be done using vanilla JavaScript, often with <code>Array</code> methods.
+So after replacing a couple of <code>ramda</code> calls with vanilla equivalents I did a quick
+peak at all of the other places using <code>ramda</code> and discovered that pretty much all of
+them were trivial replacements, and there were only a couple of instances where I would
+have to go a bit beyond &ldquo;trivial&rdquo; to convert things to vanilla JS.
+So I came to the conclusion that <code>ramda</code> wasn&rsquo;t really needed and removed it from
+the package dependencies.</p>
+
+<p>With that out of the way I continued working through all of the buffered files, fixing
+linting errors and replacing now-defunct <code>ramda</code> calls with vanilla JS.</p>
+
+<h1 id="working-on-the-tests">Working on the tests</h1>
+
+<p>Once again <code>eslint --fix</code> was a lifesaver here.
+It fixed a bunch of formatting issues in the tests, and the remaining ones were pretty
+simple to deal with.
+Mostly things like using destructuring, having individual <code>let</code> and <code>const</code> assignments
+instead of chaining assignments with commas, implementing arrow functions for unnamed
+functions, stuff like that.</p>
+
+<h1 id="running-the-tests">Running the tests</h1>
+
+<p>This is where I&rsquo;m at now.
+It isn&rsquo;t as bad as I was thinking it would be.
+Roughly 50% of the tests are passing, which means that I probably just made some
+goofy errors in a couple of key places as I was converting away from <code>ramda</code>.
+I&rsquo;m about to get into that now.</p>
+
+<h1 id="wrapping-up">Wrapping up</h1>
+
+<p>Once I finish up getting all of the tests to pass I&rsquo;ll update with a new post,
+sumbit the merge request and see where this goes after that.
+At the very least I&rsquo;ll be able to make use of it for my purposes, so definitely looking
+forward to that.</p>
+
+    </div>
+
+    
+
+
+<div class="article-tags">
+  
+  <a class="btn btn-primary btn-outline" href="/tags/refactor">refactor</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/nodejs">nodejs</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/javascript">javascript</a>
+  
+</div>
+
+
+
+
+    
+    
+    
+
+    
+      
+      
+      
+      
+
+      
+      
+      
+      
+    
+
+  </div>
+</article>
+
+<div class="container">
+  <nav>
+  <ul class="pager">
+    
+    <li class="previous"><a href="https://ackso.net/project/exercises-for-programmers-4/"><span
+      aria-hidden="true">&larr;</span> Exercises for Programmers 4 - NODEJS</a></li>
+    
+
+    
+  </ul>
+</nav>
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2017 Jeremy T Jackson &middot; 
+
+      Powered by the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+    <script id="dsq-count-scr" src="//ackso-net.disqus.com.disqus.com/count.js" async></script>
+    
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+    
+    
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+      
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
+
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/python.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/bash.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/css.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/diff.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/javascript.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/json.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/markdown.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/nginx.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/processing.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/sql.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/tex.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/vim.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML" integrity="sha512-tOav5w1OjvsSJzePRtt2uQPFwBoHt1VZcUq8l8nm5284LEKE9FSJBQryzMBzHxY5P0zRdNqEcpLIRVYFNgu1jw==" crossorigin="anonymous"></script>
+    
+    
+
+  </body>
+</html>
+
