@@ -11,6 +11,187 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Exercises for Programmers 5 - NODEJS</title>
+      <link>https://ackso.net/project/exercises-for-programmers-5/</link>
+      <pubDate>Sat, 20 Jan 2018 17:18:29 -0700</pubDate>
+      
+      <guid>https://ackso.net/project/exercises-for-programmers-5/</guid>
+      <description>
+
+&lt;p&gt;I had to take a break from working through the book to get a few other &amp;ldquo;life&amp;rdquo; things
+done, but with those in the bag I was able to hop back into it today and finish up
+Chapter 3.&lt;/p&gt;
+
+&lt;p&gt;After the amount of learning I did with Exercise 10, the remaining three exercises
+ended up being really easy and following basically the same pattern in all three
+cases.&lt;/p&gt;
+
+&lt;p&gt;Repository for this is still
+&lt;a href=&#34;https://github.com/jeremy-j-ackso/exercises-for-programmers-nodejs&#34; target=&#34;_blank&#34;&gt;on GitHub.&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Once again, I&amp;rsquo;m going to leave out the tests from this coverage since it&amp;rsquo;s all
+pretty straightforward and follows the same pattern each time.
+I was expecting the test file for this chapter to be over 1,000 lines of code, but
+somehow it only came out to 990.
+It makes me wonder what test cases I overlooked as I was working on these
+last three exercises.&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;m also going to leave out the code implementing the &lt;code&gt;readline&lt;/code&gt; functionality.
+Since the introduction of &lt;code&gt;Promise&lt;/code&gt; chaining that I implemented in Exercise 10
+I haven&amp;rsquo;t had to do anything new and interesting there either, and once again
+it looks like I&amp;rsquo;ve captured a good pattern for how to do that.&lt;/p&gt;
+
+&lt;p&gt;I started on these around 11 this morning.
+It&amp;rsquo;s now 5:30 PM and I&amp;rsquo;ve done a lot of driving and walking during that time in
+addition to writing code, so I think I&amp;rsquo;ve got a total of maybe 2-3 hours of
+actual coding time in today.
+So I feel like I made a lot of progress in being able to wrap in the chapter in
+a fairly efficient and concise manner.&lt;/p&gt;
+
+&lt;p&gt;I also think I&amp;rsquo;ve found a pretty good function pattern for checking that numeric
+inputs are valid.
+I should break that out into a utility module so that I stop re-creating it each
+time.
+That would help cut down on the number of tests I have to write, and also let me
+write less code each time I start on a new exercise.
+Breaking it out and updating all of the calls could take some time though.
+For the moment I&amp;rsquo;m more excited to just plow through the exercises.&lt;/p&gt;
+
+&lt;h1 id=&#34;exercise-11&#34;&gt;Exercise 11&lt;/h1&gt;
+
+&lt;p&gt;This exercise is a Euro to US Dollar currency converter.
+I have no idea if the conversion rates are even correct.
+I could probably go and find an API to supply this, but researching that could
+have taken a bit more time than I was willing to commit to at this point.
+Not that it would have been difficult once I found the API.
+It would have actually been a good opportunity to do some practice with &lt;code&gt;Stream&lt;/code&gt;.
+Maybe I&amp;rsquo;ll consider a refactor of that at some point.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;function checkInput(value) {
+  if (typeof value !== &#39;string&#39;) {
+    throw new Error(&#39;input amount must be delivered as a string&#39;)
+  }
+  if (Number.isNaN(parseFloat(value)) || /\d+\.\d+\.\d+/.test(value)) {
+    throw new Error(&#39;input must be parseable as a number&#39;)
+  }
+  return true
+}
+
+function calculateConversion(amount_from, rate_from, rate_to) {
+  if (typeof amount_from !== &#39;number&#39; ||
+    typeof rate_from !== &#39;number&#39; ||
+    typeof rate_to !== &#39;number&#39;) {
+    throw new Error(&#39;all inputs must be numeric&#39;)
+  }
+  const output = (amount_from * rate_from) / rate_to
+  return output.toFixed(2)
+}
+
+function buildConversion(amount_from, rate_from) {
+  checkInput(amount_from)
+  checkInput(rate_from)
+  const parsed_from = parseFloat(amount_from)
+  const parsed_rate = parseFloat(rate_from)
+  const rate_to = 98.24
+  const converted_value = calculateConversion(parsed_from, parsed_rate, rate_to)
+
+  return `${amount_from} euros at an exchange rate of ${rate_from} is ${converted_value} US dollars`
+}
+
+module.exports = {
+  calculateConversion,
+  checkInput,
+  buildConversion,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;exercise-12&#34;&gt;Exercise 12&lt;/h1&gt;
+
+&lt;p&gt;This one is a basic interest calculator, without doing any compounding.
+That made the math super easy.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;function simpleInterest(principal, rate, period) {
+  const output = principal + (principal * period * rate * 0.01)
+  return output.toFixed(2)
+}
+
+function checkSIinputs(value) {
+  if (typeof value !== &#39;string&#39;) {
+    throw new Error(&#39;input amount must be delivered as a string&#39;)
+  }
+  if (Number.isNaN(parseFloat(value)) || /\d+\.\d+\.\d+/.test(value)) {
+    throw new Error(&#39;input must be parseable as a number&#39;)
+  }
+  return true
+}
+
+function buildSIstring(principal, rate, period) {
+  checkSIinputs(principal)
+  checkSIinputs(rate)
+  checkSIinputs(period)
+
+  const parsed_principal = parseFloat(principal)
+  const parsed_rate = parseFloat(rate)
+  const parsed_period = parseFloat(period)
+  const accrued = simpleInterest(parsed_principal, parsed_rate, parsed_period)
+
+  return `After ${period} years at ${rate}%, the investment will be worth $${accrued}.`
+}
+
+module.exports = {
+  simpleInterest,
+  checkSIinputs,
+  buildSIstring,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;exercise-13&#34;&gt;Exercise 13&lt;/h1&gt;
+
+&lt;p&gt;This one is for compounding interest.
+A little bit more complicated mathematically, but again: not really a problem.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;function compound_interest(principal, rate, period, frequency) {
+  const exponent = period * frequency
+  const small_interest = 1 + ((0.01 * rate) / frequency)
+  const output = principal * (small_interest ** exponent)
+  return output.toFixed(2)
+}
+
+function checkCIinputs(value) {
+  if (typeof value !== &#39;string&#39;) {
+    throw new Error(&#39;input amount must be delivered as a string&#39;)
+  }
+  if (Number.isNaN(parseFloat(value)) || /\d+\.\d+\.\d+/.test(value)) {
+    throw new Error(&#39;input must be parseable as a number&#39;)
+  }
+  return true
+}
+
+function buildCIstring(principal, rate, period, frequency) {
+  checkCIinputs(principal)
+  checkCIinputs(rate)
+  checkCIinputs(period)
+  checkCIinputs(frequency)
+  const p_principal = parseFloat(principal)
+  const p_rate = parseFloat(rate)
+  const p_period = parseFloat(period)
+  const p_frequency = parseFloat(frequency)
+
+  const accrued = compound_interest(p_principal, p_rate, p_period, p_frequency)
+
+  return `$${principal} invested at ${rate}% for ${period} years compounded ${frequency} times per year is $${accrued}`
+}
+
+module.exports = {
+  compound_interest,
+  checkCIinputs,
+  buildCIstring,
+}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Refactoring Mock Couch</title>
       <link>https://ackso.net/project/refactoring-mock-couch/</link>
       <pubDate>Sat, 06 Jan 2018 15:48:48 -0700</pubDate>
