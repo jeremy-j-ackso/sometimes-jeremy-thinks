@@ -11,6 +11,206 @@
     <atom:link href="/post/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Experimenting With GitLab CI</title>
+      <link>https://ackso.net/post/experimenting-with-gitlab-ci/</link>
+      <pubDate>Tue, 03 Apr 2018 20:57:42 -0600</pubDate>
+      
+      <guid>https://ackso.net/post/experimenting-with-gitlab-ci/</guid>
+      <description>
+
+&lt;p&gt;So last weekend I really buckled down on a project that I started a couple weeks
+ago before I came down with a really bad cold and was laid-up for a couple days.
+I was trying to figure out a bunch of different things: how to use Docker in my
+web development workflow, how to make use of GitLab CI in that workflow, and
+more things in the vein of converting my workflow to be more amenable to Continuous
+Integration.
+This last weekend was the first in many that I was fully feeling myself, so I
+decided to finish that up and really figure out what I was failing to grasp before.&lt;/p&gt;
+
+&lt;h2&gt;Table of Contents&lt;/h2&gt;
+&lt;nav id=&#34;TableOfContents&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#what-i-wasn-t-grokking-about-docker&#34;&gt;What I wasn&amp;rsquo;t grokking about Docker.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#what-i-wasn-t-grokking-about-gitlab-ci&#34;&gt;What I wasn&amp;rsquo;t grokking about GitLab CI.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#what-happened-last-weekend&#34;&gt;What happened last weekend.&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#first-steps&#34;&gt;First Steps&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#adding-a-database&#34;&gt;Adding a database&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#getting-those-dope-ass-badges&#34;&gt;Getting those dope-ass badges&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#adding-on-code-climate&#34;&gt;Adding on Code Climate&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#going-even-further&#34;&gt;Going even further&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#where-to-find-it&#34;&gt;Where to find it.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#what-s-next&#34;&gt;What&amp;rsquo;s next?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/nav&gt;
+
+
+&lt;h1 id=&#34;what-i-wasn-t-grokking-about-docker&#34;&gt;What I wasn&amp;rsquo;t grokking about Docker.&lt;/h1&gt;
+
+&lt;p&gt;I&amp;rsquo;m very familiar with setting up Vagrant boxes and using them to prototype my
+deployment environments.
+I&amp;rsquo;ve even dabbled a little bit into Chef for configuration management, though
+I&amp;rsquo;m not totally grokking that either (there may be an upcoming post on Ansible
+because I think I might be able to grok that over a couple of weekends).
+What I was having trouble with in Docker was how to make all the containers
+work together and how they should talk to each other.&lt;/p&gt;
+
+&lt;p&gt;My web development projects thus far have all been small-scale.
+Each one can happily reside on a modest server and perform very well, and that
+includes the whole OS, webserver, database, and application server.
+Because of that, everything is talking to each over &lt;code&gt;localhost&lt;/code&gt;, which makes
+networking and most security issues extremely easy to deal with.
+However, all of my previous attempts to dockerize even one part of this stack
+have totally failed because of networking issues.
+I just couldn&amp;rsquo;t figure out how to make my locally-running application talk to
+a dockerized database.
+Because of those troubles I figured that trying to dockerize each or most of
+those pieces would end up totally failling.
+I was probably right at the time, but mostly due to my then (and still) very
+limited knowledge of container networking and orchestration.&lt;/p&gt;
+
+&lt;h1 id=&#34;what-i-wasn-t-grokking-about-gitlab-ci&#34;&gt;What I wasn&amp;rsquo;t grokking about GitLab CI.&lt;/h1&gt;
+
+&lt;p&gt;I knew at some level that GitLab CI was also using Docker to achieve things,
+and because of my previously-mentioned problems in Docker networking and
+orchestration and not knowing how to build my applications to work for Dockerized
+applications and databases, I just kept failing and failing to get GitLab CI
+to work.
+This was before I discovered that you could just run arbitrary bash in many of
+these containers.&lt;/p&gt;
+
+&lt;h1 id=&#34;what-happened-last-weekend&#34;&gt;What happened last weekend.&lt;/h1&gt;
+
+&lt;p&gt;Last weekend, I decided to fix all of this and I knew that I had to start with
+Docker.
+I&amp;rsquo;ve been following Docker on Twitter and seeing a lot about &lt;code&gt;docker-compose&lt;/code&gt;.
+So I read the &lt;a href=&#34;https://docs.docker.com/compose/gettingstarted/&#34; target=&#34;_blank&#34;&gt;Getting Started guide&lt;/a&gt;
+and it immediately seemed to make sense.
+I decided to convert the repo I had been working on to use &lt;code&gt;docker-compose&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;first-steps&#34;&gt;First Steps&lt;/h2&gt;
+
+&lt;p&gt;My first step was to just grab a generic ubuntu docker image, run all the commands
+to install Node, install my dependencies, and get the Express server running.
+I was able to get a minimal example that didn&amp;rsquo;t rely on a database or any other
+services running in under an hour, and when I succeeded I was over the moon
+with joy.
+I also suspected that I may have had enough to make running a minimal test suite
+in GitLab CI possible.
+So I looked at the documentation for that, watched a couple of webinars put on
+by the GitLab sales staff, and immediately saw the similarity between how you
+set up &lt;code&gt;docker-compose&lt;/code&gt; and how you set up GitLab CI.
+I got GitLab CI running with passing jobs on my next push and got that rush
+of joy again.
+Why didn&amp;rsquo;t things fall into place like this last time?&lt;/p&gt;
+
+&lt;h2 id=&#34;adding-a-database&#34;&gt;Adding a database&lt;/h2&gt;
+
+&lt;p&gt;I immediately started reading up on services in &lt;code&gt;docker-compose&lt;/code&gt;, again noticing
+the similarity to the GitLab CI documentation on how services work.
+I was able to get a &lt;code&gt;couchdb:2.1.1&lt;/code&gt; container to talk to my ubuntu container
+very quickly, just testing it with &lt;code&gt;curl&lt;/code&gt;, and based on that messing around I
+came to the conclusion that I could set up some Express routes to talk to this
+datbase.
+So I did.&lt;/p&gt;
+
+&lt;p&gt;I wrote tests for it as well, and figured out how I could run arbitrary commands
+on my containers so that I could do local runs of my test suite.
+This also solved another problem that had been vexxing me for a long time: I no
+longer needed to mock a database for my test suite.
+I could just set up an empty docker container with my database all set up to use
+for testing against, which would be more like real life anyhow.
+Sure it would take a little longer to get the containers running than using a
+database mocking library, but we&amp;rsquo;re talking about seconds, so it&amp;rsquo;s not really
+that big of a deal.&lt;/p&gt;
+
+&lt;p&gt;I also duplicated this service configuration over to my &lt;code&gt;.gitlab-ci.yml&lt;/code&gt; file,
+since it had so many similarities to my &lt;code&gt;docker-compose.yml&lt;/code&gt;.
+I crossed my fingers, pushed to my repo, and was totally awed when I saw the
+correct couchdb image spinning up in the CI job.
+I think that particular job failed, but it was probably because of a failing
+test rather than the containers not correctly talking to each other.
+It was a fixable problem.&lt;/p&gt;
+
+&lt;h2 id=&#34;getting-those-dope-ass-badges&#34;&gt;Getting those dope-ass badges&lt;/h2&gt;
+
+&lt;p&gt;I&amp;rsquo;ve been in awe of badges for build pipelines, code coverage, etc., that I&amp;rsquo;ve
+seen on other projects for a couple of years now and I noticed that the project
+settings in GitLab had some info on them, so I decided it was time to read up
+on that.
+I was able to grab the pipeline badge immediately.
+The code coverage badge needed a little bit of work though.&lt;/p&gt;
+
+&lt;p&gt;GitLab suggested using &lt;code&gt;tap&lt;/code&gt;.
+I was already using &lt;code&gt;mocha&lt;/code&gt; for testing, and didn&amp;rsquo;t really want to switch.
+I didn&amp;rsquo;t want to rewrite my tests and I use &lt;code&gt;mocha&lt;/code&gt; at work as well, so I
+decided I had to find another way.
+I discovered that &lt;code&gt;tap&lt;/code&gt; uses &lt;code&gt;istanbul&lt;/code&gt; via &lt;code&gt;nyc&lt;/code&gt; for code coverage, which
+explained the regex that GitLab suggested.
+I was able to very quickly get &lt;code&gt;nyc&lt;/code&gt; stuck into my &lt;code&gt;test&lt;/code&gt; npm script, and
+with some experimenting with the different reporters, was able to get the
+kind of output that would fit the regex GitLab was suggesting for use with
+&lt;code&gt;tap&lt;/code&gt; (it&amp;rsquo;s the &lt;code&gt;text-summary&lt;/code&gt; reporter, btw).
+A little bit of configuration on the GitLab side later and I had a code
+coverage badge gracing my &lt;code&gt;README.md&lt;/code&gt; alongside my &lt;code&gt;build&lt;/code&gt; badge.&lt;/p&gt;
+
+&lt;h2 id=&#34;adding-on-code-climate&#34;&gt;Adding on Code Climate&lt;/h2&gt;
+
+&lt;p&gt;While doing research on code coverage their was also a lot of talk about
+Code Climate.
+I knew they had their paid tooling, but didn&amp;rsquo;t totally get what was being
+done in the GitLab webinars and documentation to make it work.
+I also didn&amp;rsquo;t really know how to interpret it (I&amp;rsquo;m still fuzzy on this for
+the back end case, but it&amp;rsquo;s clearer for the front end case).
+Anyways, not finding any GitLab documentation for how to customize it,
+I just copy/pasted GitLab&amp;rsquo;s suggested Code Climate &lt;code&gt;.gitlab-ci.yml&lt;/code&gt; configuration
+and it somehow worked in my project.&lt;/p&gt;
+
+&lt;p&gt;Like I mentioned, GitLab&amp;rsquo;s built-in tooling for interpreting the &lt;code&gt;codeclimate.json&lt;/code&gt;
+artifact is really great for front end projects, but this being totally a
+back end project for the moment, it was just really hard to read and interpret
+the JSON.
+Maybe that will be corrected in the future.&lt;/p&gt;
+
+&lt;h2 id=&#34;going-even-further&#34;&gt;Going even further&lt;/h2&gt;
+
+&lt;p&gt;I decided that running the full installs of everything each time I had to build
+my containers or run my CI jobs was taking way too long, so I thought I should
+probably do at least a minimum of research to see if there was a pre-existing
+Docker container that could run my application server after only doing an
+&lt;code&gt;npm install&lt;/code&gt;.
+Lo and behold, three whole minutes of searching yielded the &lt;code&gt;node:8&lt;/code&gt; container.
+I implemented that, which made my &lt;code&gt;Dockerfile&lt;/code&gt;, &lt;code&gt;docker-compose.yml&lt;/code&gt;, and
+&lt;code&gt;.gitlab-ci.yml&lt;/code&gt; files all smaller, and life immediately got better.&lt;/p&gt;
+
+&lt;h1 id=&#34;where-to-find-it&#34;&gt;Where to find it.&lt;/h1&gt;
+
+&lt;p&gt;The repo is public, as are all of the runs of the pipeline.
+I also put a bunch more detail into the &lt;code&gt;README.md&lt;/code&gt;, talking more about the
+&amp;ldquo;why&amp;rdquo; of CI, and the instructions for &lt;code&gt;docker-compose&lt;/code&gt; and GitLab CI.
+You can find it &lt;a href=&#34;https://gitlab.com/jeremy.jackson/experimenting-with-cicd&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Feel free to clone it, open issues for my abundant and obvious errors,
+or even contribute a fix.&lt;/p&gt;
+
+&lt;h1 id=&#34;what-s-next&#34;&gt;What&amp;rsquo;s next?&lt;/h1&gt;
+
+&lt;p&gt;I have three more things I intend to accomplish with this project.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Incorporate a front end that also gets tested, code quality and coverage reports,
+and gets built/minified into an artifact.&lt;/li&gt;
+&lt;li&gt;Set up a dedicated GitLab CI runner. I&amp;rsquo;m considering a Raspberry Pi for this, though I do
+have a couple of older machines that I&amp;rsquo;ve picked up from friends on the cheap that I
+could convert for this purpose as well.&lt;/li&gt;
+&lt;li&gt;Set up Continuous Deployment. Automating deployment would be tight &amp;ldquo;AEE EFF&amp;rdquo; (as the
+kids say).&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Why I Use Vagrant So Much</title>
       <link>https://ackso.net/post/why-i-use-vagrant-so-much/</link>
       <pubDate>Sun, 17 Dec 2017 17:03:13 -0700</pubDate>

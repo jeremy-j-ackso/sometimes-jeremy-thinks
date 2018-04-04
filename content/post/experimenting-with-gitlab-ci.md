@@ -1,8 +1,8 @@
 ---
 title: "Experimenting With GitLab CI"
 date: 2018-04-03T20:57:42-06:00
-draft: true
-tags: ["continuous integration", "git", "gitlab"]
+draft: false
+tags: ["continuous integration", "git", "gitlab", "docker", "docker-compose"]
 summary: "Setting up a NodeJS project to work with GitLab CI and docker-compose."
 ---
 
@@ -12,7 +12,7 @@ I was trying to figure out a bunch of different things: how to use Docker in my
 web development workflow, how to make use of GitLab CI in that workflow, and
 more things in the vein of converting my workflow to be more amenable to Continuous
 Integration.
-This last weekend was the first in many that was fully feeling myself, so I
+This last weekend was the first in many that I was fully feeling myself, so I
 decided to finish that up and really figure out what I was failing to grasp before.
 
 {{% toc %}}
@@ -53,7 +53,8 @@ these containers.
 Last weekend, I decided to fix all of this and I knew that I had to start with
 Docker.
 I've been following Docker on Twitter and seeing a lot about `docker-compose`.
-So I read the Getting Started guide and it immediately seemed to make sense.
+So I read the [Getting Started guide](https://docs.docker.com/compose/gettingstarted/)
+and it immediately seemed to make sense.
 I decided to convert the repo I had been working on to use `docker-compose`.
 
 ## First Steps
@@ -63,8 +64,8 @@ I was able to get a minimal example that didn't rely on a database or any other
 services running in under an hour, and when I succeeded I was over the moon
 with joy.
 I also suspected that I may have had enough to make running a minimal test suite
-in GitLab CI.
-So looked at the documentation for that, watched a couple of webinars put on
+in GitLab CI possible.
+So I looked at the documentation for that, watched a couple of webinars put on
 by the GitLab sales staff, and immediately saw the similarity between how you
 set up `docker-compose` and how you set up GitLab CI.
 I got GitLab CI running with passing jobs on my next push and got that rush
@@ -75,14 +76,14 @@ Why didn't things fall into place like this last time?
 I immediately started reading up on services in `docker-compose`, again noticing
 the similarity to the GitLab CI documentation on how services work.
 I was able to get a `couchdb:2.1.1` container to talk to my ubuntu container
-very quickly, just testing it with bash, and based on that messing around I
+very quickly, just testing it with `curl`, and based on that messing around I
 came to the conclusion that I could set up some Express routes to talk to this
 datbase.
 So I did.
 
 I wrote tests for it as well, and figured out how I could run arbitrary commands
 on my containers so that I could do local runs of my test suite.
-This also took another problem that had been vexxing me for a long time: I no
+This also solved another problem that had been vexxing me for a long time: I no
 longer needed to mock a database for my test suite.
 I could just set up an empty docker container with my database all set up to use
 for testing against, which would be more like real life anyhow.
@@ -136,6 +137,16 @@ back end project for the moment, it was just really hard to read and interpret
 the JSON.
 Maybe that will be corrected in the future.
 
+## Going even further
+I decided that running the full installs of everything each time I had to build
+my containers or run my CI jobs was taking way too long, so I thought I should
+probably do at least a minimum of research to see if there was a pre-existing
+Docker container that could run my application server after only doing an
+`npm install`.
+Lo and behold, three whole minutes of searching yielded the `node:8` container.
+I implemented that, which made my `Dockerfile`, `docker-compose.yml`, and
+`.gitlab-ci.yml` files all smaller, and life immediately got better.
+
 # Where to find it.
 The repo is public, as are all of the runs of the pipeline.
 I also put a bunch more detail into the `README.md`, talking more about the
@@ -151,7 +162,7 @@ I have three more things I intend to accomplish with this project.
 1. Incorporate a front end that also gets tested, code quality and coverage reports,
 and gets built/minified into an artifact.
 2. Set up a dedicated GitLab CI runner. I'm considering a Raspberry Pi for this, though I do
-have a couple of older machines that I've picked from friends on the cheap that I
+have a couple of older machines that I've picked up from friends on the cheap that I
 could convert for this purpose as well.
 3. Set up Continuous Deployment. Automating deployment would be tight "AEE EFF" (as the
 kids say).

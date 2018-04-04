@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.31.1" />
+  <meta name="author" content="Jeremy Jackson">
+  <meta name="description" content="Software Engineering and Data Science">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://ackso.net/post/experimenting-with-gitlab-ci/">
+
+  
+  
+
+
+  
+
+  
+  
+  
+  
+    
+  
+  
+    
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+    
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  
+  
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+
+  
+  <link rel="alternate" href="https://ackso.net/index.xml" type="application/rss+xml" title="Sometimes Jeremy Thinks">
+  <link rel="feed" href="https://ackso.net/index.xml" type="application/rss+xml" title="Sometimes Jeremy Thinks">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://ackso.net/post/experimenting-with-gitlab-ci/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@jeremy_j_ackso">
+  <meta property="twitter:creator" content="@jeremy_j_ackso">
+  
+  <meta property="og:site_name" content="Sometimes Jeremy Thinks">
+  <meta property="og:url" content="https://ackso.net/post/experimenting-with-gitlab-ci/">
+  <meta property="og:title" content="Experimenting With GitLab CI | Sometimes Jeremy Thinks">
+  <meta property="og:description" content="">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2018-04-03T20:57:42-06:00">
+  
+  <meta property="article:modified_time" content="2018-04-03T20:57:42-06:00">
+  
+
+  
+
+  <title>Experimenting With GitLab CI | Sometimes Jeremy Thinks</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">Sometimes Jeremy Thinks</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#projects">
+            
+            <span>Projects</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+    <div class="article-inner">
+      <h1 itemprop="name">Experimenting With GitLab CI</h1>
+
+      
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2018-04-03 20:57:42 -0600 MDT" itemprop="datePublished">
+      2018-04-03
+    </time>
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    8 min read
+  </span>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <a href="https://ackso.net/post/experimenting-with-gitlab-ci/#disqus_thread"></a>
+  
+
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Experimenting%20With%20GitLab%20CI&amp;url=https%3a%2f%2fackso.net%2fpost%2fexperimenting-with-gitlab-ci%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fackso.net%2fpost%2fexperimenting-with-gitlab-ci%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fackso.net%2fpost%2fexperimenting-with-gitlab-ci%2f&amp;title=Experimenting%20With%20GitLab%20CI"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=https%3a%2f%2fackso.net%2fpost%2fexperimenting-with-gitlab-ci%2f&amp;title=Experimenting%20With%20GitLab%20CI"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Experimenting%20With%20GitLab%20CI&amp;body=https%3a%2f%2fackso.net%2fpost%2fexperimenting-with-gitlab-ci%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+      <div class="article-style" itemprop="articleBody">
+        
+
+<p>So last weekend I really buckled down on a project that I started a couple weeks
+ago before I came down with a really bad cold and was laid-up for a couple days.
+I was trying to figure out a bunch of different things: how to use Docker in my
+web development workflow, how to make use of GitLab CI in that workflow, and
+more things in the vein of converting my workflow to be more amenable to Continuous
+Integration.
+This last weekend was the first in many that I was fully feeling myself, so I
+decided to finish that up and really figure out what I was failing to grasp before.</p>
+
+<h2>Table of Contents</h2>
+<nav id="TableOfContents">
+<ul>
+<li><a href="#what-i-wasn-t-grokking-about-docker">What I wasn&rsquo;t grokking about Docker.</a></li>
+<li><a href="#what-i-wasn-t-grokking-about-gitlab-ci">What I wasn&rsquo;t grokking about GitLab CI.</a></li>
+<li><a href="#what-happened-last-weekend">What happened last weekend.</a>
+<ul>
+<li><a href="#first-steps">First Steps</a></li>
+<li><a href="#adding-a-database">Adding a database</a></li>
+<li><a href="#getting-those-dope-ass-badges">Getting those dope-ass badges</a></li>
+<li><a href="#adding-on-code-climate">Adding on Code Climate</a></li>
+<li><a href="#going-even-further">Going even further</a></li>
+</ul></li>
+<li><a href="#where-to-find-it">Where to find it.</a></li>
+<li><a href="#what-s-next">What&rsquo;s next?</a></li>
+</ul>
+</nav>
+
+
+<h1 id="what-i-wasn-t-grokking-about-docker">What I wasn&rsquo;t grokking about Docker.</h1>
+
+<p>I&rsquo;m very familiar with setting up Vagrant boxes and using them to prototype my
+deployment environments.
+I&rsquo;ve even dabbled a little bit into Chef for configuration management, though
+I&rsquo;m not totally grokking that either (there may be an upcoming post on Ansible
+because I think I might be able to grok that over a couple of weekends).
+What I was having trouble with in Docker was how to make all the containers
+work together and how they should talk to each other.</p>
+
+<p>My web development projects thus far have all been small-scale.
+Each one can happily reside on a modest server and perform very well, and that
+includes the whole OS, webserver, database, and application server.
+Because of that, everything is talking to each over <code>localhost</code>, which makes
+networking and most security issues extremely easy to deal with.
+However, all of my previous attempts to dockerize even one part of this stack
+have totally failed because of networking issues.
+I just couldn&rsquo;t figure out how to make my locally-running application talk to
+a dockerized database.
+Because of those troubles I figured that trying to dockerize each or most of
+those pieces would end up totally failling.
+I was probably right at the time, but mostly due to my then (and still) very
+limited knowledge of container networking and orchestration.</p>
+
+<h1 id="what-i-wasn-t-grokking-about-gitlab-ci">What I wasn&rsquo;t grokking about GitLab CI.</h1>
+
+<p>I knew at some level that GitLab CI was also using Docker to achieve things,
+and because of my previously-mentioned problems in Docker networking and
+orchestration and not knowing how to build my applications to work for Dockerized
+applications and databases, I just kept failing and failing to get GitLab CI
+to work.
+This was before I discovered that you could just run arbitrary bash in many of
+these containers.</p>
+
+<h1 id="what-happened-last-weekend">What happened last weekend.</h1>
+
+<p>Last weekend, I decided to fix all of this and I knew that I had to start with
+Docker.
+I&rsquo;ve been following Docker on Twitter and seeing a lot about <code>docker-compose</code>.
+So I read the <a href="https://docs.docker.com/compose/gettingstarted/" target="_blank">Getting Started guide</a>
+and it immediately seemed to make sense.
+I decided to convert the repo I had been working on to use <code>docker-compose</code>.</p>
+
+<h2 id="first-steps">First Steps</h2>
+
+<p>My first step was to just grab a generic ubuntu docker image, run all the commands
+to install Node, install my dependencies, and get the Express server running.
+I was able to get a minimal example that didn&rsquo;t rely on a database or any other
+services running in under an hour, and when I succeeded I was over the moon
+with joy.
+I also suspected that I may have had enough to make running a minimal test suite
+in GitLab CI possible.
+So I looked at the documentation for that, watched a couple of webinars put on
+by the GitLab sales staff, and immediately saw the similarity between how you
+set up <code>docker-compose</code> and how you set up GitLab CI.
+I got GitLab CI running with passing jobs on my next push and got that rush
+of joy again.
+Why didn&rsquo;t things fall into place like this last time?</p>
+
+<h2 id="adding-a-database">Adding a database</h2>
+
+<p>I immediately started reading up on services in <code>docker-compose</code>, again noticing
+the similarity to the GitLab CI documentation on how services work.
+I was able to get a <code>couchdb:2.1.1</code> container to talk to my ubuntu container
+very quickly, just testing it with <code>curl</code>, and based on that messing around I
+came to the conclusion that I could set up some Express routes to talk to this
+datbase.
+So I did.</p>
+
+<p>I wrote tests for it as well, and figured out how I could run arbitrary commands
+on my containers so that I could do local runs of my test suite.
+This also solved another problem that had been vexxing me for a long time: I no
+longer needed to mock a database for my test suite.
+I could just set up an empty docker container with my database all set up to use
+for testing against, which would be more like real life anyhow.
+Sure it would take a little longer to get the containers running than using a
+database mocking library, but we&rsquo;re talking about seconds, so it&rsquo;s not really
+that big of a deal.</p>
+
+<p>I also duplicated this service configuration over to my <code>.gitlab-ci.yml</code> file,
+since it had so many similarities to my <code>docker-compose.yml</code>.
+I crossed my fingers, pushed to my repo, and was totally awed when I saw the
+correct couchdb image spinning up in the CI job.
+I think that particular job failed, but it was probably because of a failing
+test rather than the containers not correctly talking to each other.
+It was a fixable problem.</p>
+
+<h2 id="getting-those-dope-ass-badges">Getting those dope-ass badges</h2>
+
+<p>I&rsquo;ve been in awe of badges for build pipelines, code coverage, etc., that I&rsquo;ve
+seen on other projects for a couple of years now and I noticed that the project
+settings in GitLab had some info on them, so I decided it was time to read up
+on that.
+I was able to grab the pipeline badge immediately.
+The code coverage badge needed a little bit of work though.</p>
+
+<p>GitLab suggested using <code>tap</code>.
+I was already using <code>mocha</code> for testing, and didn&rsquo;t really want to switch.
+I didn&rsquo;t want to rewrite my tests and I use <code>mocha</code> at work as well, so I
+decided I had to find another way.
+I discovered that <code>tap</code> uses <code>istanbul</code> via <code>nyc</code> for code coverage, which
+explained the regex that GitLab suggested.
+I was able to very quickly get <code>nyc</code> stuck into my <code>test</code> npm script, and
+with some experimenting with the different reporters, was able to get the
+kind of output that would fit the regex GitLab was suggesting for use with
+<code>tap</code> (it&rsquo;s the <code>text-summary</code> reporter, btw).
+A little bit of configuration on the GitLab side later and I had a code
+coverage badge gracing my <code>README.md</code> alongside my <code>build</code> badge.</p>
+
+<h2 id="adding-on-code-climate">Adding on Code Climate</h2>
+
+<p>While doing research on code coverage their was also a lot of talk about
+Code Climate.
+I knew they had their paid tooling, but didn&rsquo;t totally get what was being
+done in the GitLab webinars and documentation to make it work.
+I also didn&rsquo;t really know how to interpret it (I&rsquo;m still fuzzy on this for
+the back end case, but it&rsquo;s clearer for the front end case).
+Anyways, not finding any GitLab documentation for how to customize it,
+I just copy/pasted GitLab&rsquo;s suggested Code Climate <code>.gitlab-ci.yml</code> configuration
+and it somehow worked in my project.</p>
+
+<p>Like I mentioned, GitLab&rsquo;s built-in tooling for interpreting the <code>codeclimate.json</code>
+artifact is really great for front end projects, but this being totally a
+back end project for the moment, it was just really hard to read and interpret
+the JSON.
+Maybe that will be corrected in the future.</p>
+
+<h2 id="going-even-further">Going even further</h2>
+
+<p>I decided that running the full installs of everything each time I had to build
+my containers or run my CI jobs was taking way too long, so I thought I should
+probably do at least a minimum of research to see if there was a pre-existing
+Docker container that could run my application server after only doing an
+<code>npm install</code>.
+Lo and behold, three whole minutes of searching yielded the <code>node:8</code> container.
+I implemented that, which made my <code>Dockerfile</code>, <code>docker-compose.yml</code>, and
+<code>.gitlab-ci.yml</code> files all smaller, and life immediately got better.</p>
+
+<h1 id="where-to-find-it">Where to find it.</h1>
+
+<p>The repo is public, as are all of the runs of the pipeline.
+I also put a bunch more detail into the <code>README.md</code>, talking more about the
+&ldquo;why&rdquo; of CI, and the instructions for <code>docker-compose</code> and GitLab CI.
+You can find it <a href="https://gitlab.com/jeremy.jackson/experimenting-with-cicd" target="_blank">here</a>.</p>
+
+<p>Feel free to clone it, open issues for my abundant and obvious errors,
+or even contribute a fix.</p>
+
+<h1 id="what-s-next">What&rsquo;s next?</h1>
+
+<p>I have three more things I intend to accomplish with this project.</p>
+
+<ol>
+<li>Incorporate a front end that also gets tested, code quality and coverage reports,
+and gets built/minified into an artifact.</li>
+<li>Set up a dedicated GitLab CI runner. I&rsquo;m considering a Raspberry Pi for this, though I do
+have a couple of older machines that I&rsquo;ve picked up from friends on the cheap that I
+could convert for this purpose as well.</li>
+<li>Set up Continuous Deployment. Automating deployment would be tight &ldquo;AEE EFF&rdquo; (as the
+kids say).</li>
+</ol>
+
+      </div>
+
+      
+
+
+<div class="article-tags">
+  
+  <a class="btn btn-primary btn-outline" href="/tags/continuous-integration">continuous integration</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/git">git</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/gitlab">gitlab</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/docker">docker</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/docker-compose">docker-compose</a>
+  
+</div>
+
+
+
+    </div>
+  </div>
+
+</article>
+
+
+
+
+
+
+<div class="article-container">
+  
+<section id="comments">
+  <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "ackso-net.disqus.com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2017 Jeremy T Jackson &middot; 
+
+      Powered by the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+    <script id="dsq-count-scr" src="//ackso-net.disqus.com.disqus.com/count.js" async></script>
+    
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+    
+    
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+      
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
+
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/python.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/bash.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/css.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/diff.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/javascript.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/json.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/markdown.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/nginx.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/processing.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/sql.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/tex.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/vim.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML" integrity="sha512-tOav5w1OjvsSJzePRtt2uQPFwBoHt1VZcUq8l8nm5284LEKE9FSJBQryzMBzHxY5P0zRdNqEcpLIRVYFNgu1jw==" crossorigin="anonymous"></script>
+    
+    
+
+  </body>
+</html>
+

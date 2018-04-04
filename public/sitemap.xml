@@ -5,6 +5,15 @@
     
     <url>
     
+      <loc>https://ackso.net/post/experimenting-with-gitlab-ci/</loc>
+      <lastmod>2018-04-03T20:57:42-06:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>https://ackso.net/project/exercises-for-programmers-5/</loc>
       <lastmod>2018-01-20T17:18:29-07:00</lastmod>
     </url>
@@ -151,6 +160,36 @@
     
     <url>
     
+      <loc>https://ackso.net/tags/continuous-integration/</loc>
+      <lastmod>2018-04-03T20:57:42-06:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://ackso.net/tags/docker/</loc>
+      <lastmod>2018-04-03T20:57:42-06:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://ackso.net/tags/docker-compose/</loc>
+      <lastmod>2018-04-03T20:57:42-06:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>https://ackso.net/tags/environment/</loc>
       <lastmod>2017-12-17T14:15:50-07:00</lastmod>
       <priority>0</priority>
@@ -163,6 +202,26 @@
     
       <loc>https://ackso.net/tags/excel-is-terrible/</loc>
       <lastmod>2017-12-16T22:30:48-07:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://ackso.net/tags/git/</loc>
+      <lastmod>2018-04-03T20:57:42-06:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://ackso.net/tags/gitlab/</loc>
+      <lastmod>2018-04-03T20:57:42-06:00</lastmod>
       <priority>0</priority>
     </url>
     
