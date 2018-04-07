@@ -5,6 +5,15 @@
     
     <url>
     
+      <loc>https://ackso.net/post/first-steps-with-apache-kafka/</loc>
+      <lastmod>2018-04-07T16:35:17-06:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>https://ackso.net/post/experimenting-with-gitlab-ci/</loc>
       <lastmod>2018-04-03T20:57:42-06:00</lastmod>
     </url>
@@ -131,6 +140,16 @@
     
     <url>
     
+      <loc>https://ackso.net/tags/apache/</loc>
+      <lastmod>2018-04-07T16:35:17-06:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>https://ackso.net/tags/bad-data/</loc>
       <lastmod>2017-12-16T22:30:48-07:00</lastmod>
       <priority>0</priority>
@@ -162,6 +181,26 @@
     
       <loc>https://ackso.net/tags/continuous-integration/</loc>
       <lastmod>2018-04-03T20:57:42-06:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://ackso.net/tags/data/</loc>
+      <lastmod>2018-04-07T16:35:17-06:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://ackso.net/tags/data-engineering/</loc>
+      <lastmod>2018-04-07T16:35:17-06:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -232,6 +271,16 @@
     
       <loc>https://ackso.net/tags/javascript/</loc>
       <lastmod>2018-01-06T15:48:48-07:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://ackso.net/tags/kafka/</loc>
+      <lastmod>2018-04-07T16:35:17-06:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -340,7 +389,7 @@
     <url>
     
       <loc>https://ackso.net/tags/vagrant/</loc>
-      <lastmod>2017-12-17T17:03:13-07:00</lastmod>
+      <lastmod>2018-04-07T16:35:17-06:00</lastmod>
       <priority>0</priority>
     </url>
     
