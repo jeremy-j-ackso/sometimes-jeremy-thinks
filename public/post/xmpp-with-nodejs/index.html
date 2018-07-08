@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.31.1" />
+  <meta name="author" content="Jeremy Jackson">
+  <meta name="description" content="Software Engineering and Data Science">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://ackso.net/post/xmpp-with-nodejs/">
+
+  
+  
+
+
+  
+
+  
+  
+  
+  
+    
+  
+  
+    
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+    
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  
+  
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+
+  
+  <link rel="alternate" href="https://ackso.net/index.xml" type="application/rss+xml" title="Sometimes Jeremy Thinks">
+  <link rel="feed" href="https://ackso.net/index.xml" type="application/rss+xml" title="Sometimes Jeremy Thinks">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://ackso.net/post/xmpp-with-nodejs/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@jeremy_j_ackso">
+  <meta property="twitter:creator" content="@jeremy_j_ackso">
+  
+  <meta property="og:site_name" content="Sometimes Jeremy Thinks">
+  <meta property="og:url" content="https://ackso.net/post/xmpp-with-nodejs/">
+  <meta property="og:title" content="XMPP With Node.js | Sometimes Jeremy Thinks">
+  <meta property="og:description" content="">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2018-07-08T00:21:20-06:00">
+  
+  <meta property="article:modified_time" content="2018-07-08T00:21:20-06:00">
+  
+
+  
+
+  <title>XMPP With Node.js | Sometimes Jeremy Thinks</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">Sometimes Jeremy Thinks</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#projects">
+            
+            <span>Projects</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+    <div class="article-inner">
+      <h1 itemprop="name">XMPP With Node.js</h1>
+
+      
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2018-07-08 00:21:20 -0600 MDT" itemprop="datePublished">
+      2018-07-08
+    </time>
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    6 min read
+  </span>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <a href="https://ackso.net/post/xmpp-with-nodejs/#disqus_thread"></a>
+  
+
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=XMPP%20With%20Node.js&amp;url=https%3a%2f%2fackso.net%2fpost%2fxmpp-with-nodejs%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fackso.net%2fpost%2fxmpp-with-nodejs%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fackso.net%2fpost%2fxmpp-with-nodejs%2f&amp;title=XMPP%20With%20Node.js"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=https%3a%2f%2fackso.net%2fpost%2fxmpp-with-nodejs%2f&amp;title=XMPP%20With%20Node.js"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=XMPP%20With%20Node.js&amp;body=https%3a%2f%2fackso.net%2fpost%2fxmpp-with-nodejs%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+      <div class="article-style" itemprop="articleBody">
+        
+
+<p>XMPP has been around for a long time at this point.  Libraries for most popular
+languages exist and work quite well.  There&rsquo;s even an <a href="https://xmpp.org/about/xmpp-standards-foundation.html" target="_blank">XMPP standards
+body</a> that promotes the
+official libraries that they suggest based on quality.</p>
+
+<p>The <a href="https://xmppjs.org" target="_blank">XMPP.js</a> library for JavaScript turns out to be really
+good, but somehow really poorly documented. There are a couple of half-baked
+examples, but I found that it still took time to get something running that
+touched on some of the major features of XMPP.</p>
+
+<p>I&rsquo;ve also been working through the 2009
+<a href="http://shop.oreilly.com/product/9780596521271.do" target="_blank">XMPP</a> book from O&rsquo;Reilly,
+which is mostly oriented around clients rather than technical implementations,
+but is still good for understanding the theory and operations. My only wish is
+that this book would also have contained instructions on setting up a Jabber
+server.  It would have come in handy.</p>
+
+<p>Anyhow, below I&rsquo;m going to do a quick walk-through of what I did to get an
+<a href="https://ejabberd.im" target="_blank">ejabberd</a> server running in
+<a href="https://vagrantup.com" target="_blank">Vagrant</a>, connect to it from my laptop using
+<a href="https://pidgin.im" target="_blank">Pidgin</a>, and run the &ldquo;Echo Bot&rdquo; example from the XMPP book,
+but using Node.js instead of Python. The Echo Bot just repeats everything you IM
+to it. Nothing too fancy.</p>
+
+<p>The GitLab repo for this project is
+<a href="https://gitlab.com/jeremy.jackson/use-xmpp" target="_blank">here</a> if you don&rsquo;t want to take the
+time to implement this yourself.</p>
+
+<h2>Table of Contents</h2>
+<nav id="TableOfContents">
+<ul>
+<li><a href="#ejabberd-in-vagrant">ejabberd in Vagrant</a>
+<ul>
+<li><a href="#here-s-my-vagrantfile">Here&rsquo;s my <code>Vagrantfile</code></a></li>
+<li><a href="#here-s-my-setup-sh">Here&rsquo;s my <code>setup.sh</code></a></li>
+</ul></li>
+<li><a href="#installing-pidgin">Installing Pidgin</a></li>
+<li><a href="#node-js-echo-bot">Node.js Echo Bot</a></li>
+<li><a href="#running-it-all">Running it all</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+</nav>
+
+
+<h1 id="ejabberd-in-vagrant">ejabberd in Vagrant</h1>
+
+<p>I ended up just setting up a quick and easy Ubuntu 16.04 server in Vagrant. I
+used the <code>ejabberd</code> that was in the repo and everything went great.
+With some minimal configuration and user adding in the setup script everything
+runs very well.</p>
+
+<h2 id="here-s-my-vagrantfile">Here&rsquo;s my <code>Vagrantfile</code></h2>
+
+<p>Take special note of the forwarded ports. Port 5280 is for the web admin panel,
+and port 5222 is the TCP port that ejabberd talks over. There&rsquo;s several
+different protocols that you can use, like UDP, based on your own configuration.</p>
+
+<pre><code class="language-ruby"># -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(&quot;2&quot;) do |config|
+  config.vm.box = &quot;bento/ubuntu-16.04&quot;
+
+  config.vm.network &quot;forwarded_port&quot;, guest: 5280, host: 5280, host_ip: &quot;127.0.0.1&quot;
+  config.vm.network &quot;forwarded_port&quot;, guest: 5222, host: 5222, host_ip: &quot;127.0.0.1&quot;
+
+  config.vm.provider &quot;virtualbox&quot; do |vb|
+    vb.memory = &quot;1024&quot;
+    vb.cpus = &quot;1&quot;
+  end
+
+  config.vm.provision &quot;shell&quot;, path: &quot;setup.sh&quot;
+end
+</code></pre>
+
+<h2 id="here-s-my-setup-sh">Here&rsquo;s my <code>setup.sh</code></h2>
+
+<p>Nothing too crazy here. The <code>sed</code> lines are just modifying some relevant
+configs in <code>ejabberd</code>&rsquo;s config file.</p>
+
+<pre><code class="language-bash">apt-get update
+
+apt-get install -y ejabberd
+
+# It defaults to IPv6, but I want IPv4 just to keep things simple here.
+sed -i 's/    ip: &quot;::&quot;/    ip: &quot;0.0.0.0&quot;/g' /etc/ejabberd/ejabberd.yml
+
+# This is just setting up the admin user.
+sed -i 's/         - &quot;&quot;: &quot;localhost&quot;/         - &quot;admin&quot;: &quot;localhost&quot;/' /etc/ejabberd/ejabberd.yml
+
+systemctl restart ejabberd
+
+# I was surprised that the restart took long enough that the ejabberdctl
+# commands below were failing.
+sleep 5
+
+ejabberdctl register admin localhost password
+ejabberdctl register echo_bot localhost password
+</code></pre>
+
+<h1 id="installing-pidgin">Installing Pidgin</h1>
+
+<p>Pidgin is a Jabber-compliant Instant Messaging client for Linux, MacOS, and
+Windows. They also provide source code. If you&rsquo;re using MacOS, they do suggest
+using <a href="https://adium.io" target="_blank">Adium</a> instead.</p>
+
+<p>One of the best features of Pidgin (and probably Adium) is that it has an XMPP
+Console that you can enable in the Plugins section of the application. That way
+you can see all of the XMPP stanzas being passed between the client and server,
+and you can even use it to enter raw XMPP stanzas if you so choose. It&rsquo;s
+pretty rad.</p>
+
+<p>I&rsquo;m on Debian 9, so I just used the one in the repo&rsquo;s.</p>
+
+<pre><code class="language-bash">sudo apt-get install -y pidgin
+</code></pre>
+
+<h1 id="node-js-echo-bot">Node.js Echo Bot</h1>
+
+<p>This simple bot will let you subscribe to its status, and in chat will repeat
+everything you say. See the comments for some more details.</p>
+
+<pre><code class="language-javascript">// Client is the actual Client class, xml is a convenience function for building
+// valid XML.
+const { Client, xml } = require('xmpp.js');
+
+const client = new Client();
+
+// Node doesn't like self-signed certificates. You could also pass this as an
+// environment variable.
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
+// Here we get into the event-based actions.
+// I'm logging everything so that you can see what's getting passed through at
+// each of these stages. It gets pretty interesting and looking at this helped me a
+// ton when doing some debugging.
+client.on('error', err =&gt; console.log('ERROR:', err.toString));
+
+client.on('status', status =&gt; console.log('STATUS:', status));
+
+client.on('input', input =&gt; console.log('INPUT:', input));
+
+client.on('output', output =&gt; console.log('OUTPUT:', output));
+
+// Most of the magic happens here. You can set up all your conditions for the
+// various XMPP stanzas that you receive. You can be creative with this, for
+// instance you could have the bot running on a Raspberry Pi and change
+// some status LED's based on the message.
+client.on('stanza', stanza =&gt; {
+  console.log('STANZA:', JSON.stringify(stanza.toJSON()));
+
+  // This acts on requests from other clients to watch the status of this bot
+  // so that the other client can see whether or not this bot is online.
+  if (stanza.is('presence') &amp;&amp; stanza.attrs.type === 'subscribe') {
+    client.send(
+      xml('presence', { to: stanza.attrs.from, type: 'subscribed' })
+    );
+  }
+
+  // This is doing the echoing.
+  if (stanza.is('message') &amp;&amp; stanza.attrs.from !== client.jid) {
+    stanza.children.forEach(child =&gt; {
+      if (child.name === 'body') {
+        const response = child.children.join('\n');
+        client.send(
+          xml('message', { to: stanza.attrs.from, type: 'chat' },
+            xml('body', {}, response)
+          )
+        );
+      }
+    });
+  }
+});
+
+// When the bot comes online it updates its status to let you know that it's
+// ready to talk back to you.
+client.on('online', jid =&gt; {
+  console.log('ONLINE:', jid.toString());
+  client.send(
+    xml('presence', {}, 
+      xml('show', {}, 'chat'),
+      xml('status', {}, 'I say everything you do!'),
+    )
+  );
+});
+
+// This is just handling the client authentication.
+client.handle('authenticate', authenticate =&gt; {
+  return authenticate('echo_bot', 'password');
+});
+
+// This actually launches the server.
+client
+  .start('xmpp://localhost:5222')
+  .catch(err =&gt; console.error('start failed', err.message));
+</code></pre>
+
+<h1 id="running-it-all">Running it all</h1>
+
+<p>To get this whole thing running you need to first launch the vagrant box, then
+create a new account in Pidgin for <code>admin@localhost</code> using the fake <code>password</code>,
+and then launch the Echo Bot (<code>node index.js</code>). You&rsquo;ll see some console output from the bot
+registering with the <code>ejabberd</code> server, and then it will just wait. Once it&rsquo;s
+waiting, you can &ldquo;Add a Buddy&rdquo; in Pidgin, by looking for <code>echo_bot@localhost</code>.
+The Echo Bot will pick that up so that you can then see its status in Pidgin.
+Lastly, you can go ahead and open up a chat with your new <code>echo_bot</code> buddy, and
+it will repeat everything back to you.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>This library has a couple of other components as well, but what they do and how
+to use them I have no idea because the documentation is basically non-existent.
+I&rsquo;ll be sure to update here if/when I get to those other features.</p>
+
+      </div>
+
+      
+
+
+<div class="article-tags">
+  
+  <a class="btn btn-primary btn-outline" href="/tags/vagrant">vagrant</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/xmpp">xmpp</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/node">node</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/nodejs">nodejs</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/javascript">javascript</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/jabber">jabber</a>
+  
+</div>
+
+
+
+    </div>
+  </div>
+
+</article>
+
+
+
+<div class="article-container article-widget">
+  <div class="hr-light"></div>
+  <h3>Related</h3>
+  <ul>
+    
+    <li><a href="/project/refactoring-mock-couch/">Refactoring Mock Couch</a></li>
+    
+    <li><a href="/post/first-steps-with-apache-kafka/">First Steps With Apache Kafka</a></li>
+    
+    <li><a href="/project/exercises-for-programmers-5/">Exercises for Programmers 5 - NODEJS</a></li>
+    
+    <li><a href="/project/exercises-for-programmers-4/">Exercises for Programmers 4 - NODEJS</a></li>
+    
+    <li><a href="/project/exercises-for-programmers-3/">Exercises for Programmers 3 - NODEJS</a></li>
+    
+  </ul>
+</div>
+
+
+
+
+<div class="article-container">
+  
+<section id="comments">
+  <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "ackso-net.disqus.com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2017 Jeremy T Jackson &middot; 
+
+      Powered by the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+    <script id="dsq-count-scr" src="//ackso-net.disqus.com.disqus.com/count.js" async></script>
+    
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+    
+    
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+      
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
+
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/python.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/bash.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/css.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/diff.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/javascript.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/json.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/markdown.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/nginx.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/processing.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/sql.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/tex.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/vim.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML" integrity="sha512-tOav5w1OjvsSJzePRtt2uQPFwBoHt1VZcUq8l8nm5284LEKE9FSJBQryzMBzHxY5P0zRdNqEcpLIRVYFNgu1jw==" crossorigin="anonymous"></script>
+    
+    
+
+  </body>
+</html>
+

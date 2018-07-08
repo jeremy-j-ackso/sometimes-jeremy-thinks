@@ -5,6 +5,15 @@
     
     <url>
     
+      <loc>https://ackso.net/post/xmpp-with-nodejs/</loc>
+      <lastmod>2018-07-08T00:21:20-06:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>https://ackso.net/post/first-steps-with-apache-kafka/</loc>
       <lastmod>2018-04-07T16:35:17-06:00</lastmod>
     </url>
@@ -269,8 +278,18 @@
     
     <url>
     
+      <loc>https://ackso.net/tags/jabber/</loc>
+      <lastmod>2018-07-08T00:21:20-06:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>https://ackso.net/tags/javascript/</loc>
-      <lastmod>2018-01-06T15:48:48-07:00</lastmod>
+      <lastmod>2018-07-08T00:21:20-06:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -289,8 +308,18 @@
     
     <url>
     
+      <loc>https://ackso.net/tags/node/</loc>
+      <lastmod>2018-07-08T00:21:20-06:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>https://ackso.net/tags/nodejs/</loc>
-      <lastmod>2018-01-20T17:18:29-07:00</lastmod>
+      <lastmod>2018-07-08T00:21:20-06:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -389,7 +418,7 @@
     <url>
     
       <loc>https://ackso.net/tags/vagrant/</loc>
-      <lastmod>2018-04-07T16:35:17-06:00</lastmod>
+      <lastmod>2018-07-08T00:21:20-06:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -400,6 +429,16 @@
     
       <loc>https://ackso.net/tags/virtualization/</loc>
       <lastmod>2017-12-17T17:03:13-07:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://ackso.net/tags/xmpp/</loc>
+      <lastmod>2018-07-08T00:21:20-06:00</lastmod>
       <priority>0</priority>
     </url>
     
