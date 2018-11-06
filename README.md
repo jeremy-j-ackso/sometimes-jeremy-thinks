@@ -1,4 +1,6 @@
 # sometimes-jeremy-thinks
+Moved to GitLab. https://gitlab.com/jeremy.jackson/sometimes-jeremy-thinks
+
 This is the Hugo backend of my website: https://ackso.net
 
 Learn more about Hugo at https://gohugo.io
